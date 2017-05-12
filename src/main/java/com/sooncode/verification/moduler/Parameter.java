@@ -87,7 +87,7 @@ package com.sooncode.verification.moduler;
 
 	@Override
 	public String toString() {
-		return "{\"key\":\"" + key + "\",\"type\":\"" + type + "\",\"maxLength\":\"" + maxLength + "\",\"enumeration\":\"" + enumeration + "\"}  ";
+		return "{\"key\":\"" + key + "\",\"type\":\"" + type + "\",\"maxLength\":\"" + maxLength + "\",\"enumeration\":\"" + enumeration + "\"} must: "+must;
 	}
  
 

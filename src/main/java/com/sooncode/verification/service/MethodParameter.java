@@ -102,13 +102,19 @@ public class MethodParameter {
 			String nodeName = n.getNodeName();
 			if (nodeName.equals(PARAMETER)) {
 				Parameter p = getParameter(n);
+				Parameter newPar = new Parameter();
+				newPar.setEnumeration(p.getEnumeration());
+				newPar.setKey(p.getKey());
+				newPar.setMaxLength(p.getMaxLength());
+				newPar.setType(p.getType());
 				
 				if(getParameterMust(n)){
-					p.setMust(true);
+					newPar.setMust(true);
+					
 				}else{
-					p.setMust(false);
+					newPar.setMust(false);
 				}
-				parameters.add(p);
+				parameters.add(newPar);
 			} else if (nodeName.equals(ARRAY)) {
 				Array a = getArray(n);
 				arrays.add(a);
@@ -117,6 +123,7 @@ public class MethodParameter {
 		}
 		c.setParameters(parameters);
 		c.setArrays(arrays);
+		System.out.println("MethodParameter.getMethod()*****"+c);
 		return c;
 	}
 
