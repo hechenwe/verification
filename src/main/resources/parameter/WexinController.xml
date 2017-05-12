@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controller>
+
+	<parameter key="openId" type="STRING" maxLength="32"></parameter>
+	<parameter key="password" type="STRING" maxLength="64"></parameter>
+	
+	
+	<!-- 微信支付统一下单 -->
+	<method url="weixin/getInfo" method="POST">
+		<parameter key="mobile" type="STRING" maxLength="11"></parameter>
+		<parameter ref="openId" must="false" ></parameter>
+		<parameter ref="password"></parameter>
+		<array key="types">
+			<parameter key="type" type="STRING" maxLength="32" enumeration="AAA;BBB"></parameter>
+		</array>
+	</method>
+	 
+	 <!-- 
+	 {"mobile":"234345","openId":"asdfffffffffff","password":"123","types":[{"type":"BBB"}]}
+	  -->
+	 
+</controller>
