@@ -4,7 +4,6 @@ import java.util.Hashtable;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 
 import com.sooncode.verification.moduler.Method;
 
@@ -17,12 +16,9 @@ import com.sooncode.verification.moduler.Method;
 public class MethodParameterManager {
 	public static Map<String, Method> controllerMap = new Hashtable<>();
  
-	public static Method getMethod(HttpServletRequest request) {
-		String url = request.getRequestURL().toString();
-
-		String[] strs = url.split("/");
-		url = strs[strs.length - 2] + "/" + strs[strs.length - 1];
-
-		return controllerMap.get(url);
+	public static Method getMethod(String requestURL) {
+		String[] strs = requestURL.split("/");
+		requestURL = strs[strs.length - 2] + "/" + strs[strs.length - 1];
+		return controllerMap.get(requestURL);
 	}
 }

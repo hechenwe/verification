@@ -8,7 +8,7 @@ import java.util.List;
  * @author pc
  *
  */
-public class Array {
+public class Array  {
 	/** 数组 KEY */
 	private String key;
 

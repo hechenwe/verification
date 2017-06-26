@@ -4,15 +4,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+//import com.alibaba.fastjson.JSONArray;
+//import com.alibaba.fastjson.JSONObject;
 import com.sooncode.verification.moduler.Array;
 import com.sooncode.verification.moduler.Method;
 import com.sooncode.verification.moduler.Parameter;
 import com.sooncode.verification.moduler.VerificationResult;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 接口 参数验证 服务
@@ -31,23 +31,15 @@ public class VerificationService {
 	 * @param interfac
 	 * @return
 	 */
-	public static VerificationResult verificationInterface(HttpServletRequest request, Method interfac) {
+	public static VerificationResult verificationInterface(String methodName ,  String parameter4json , Method interfac) {
 
 		VerificationResult vr = new VerificationResult();
-
-		String method = request.getMethod();
-
-		if (!method.equals(interfac.getMethod())) {
+		if (!methodName.equals(interfac.getMethod())) {
 			vr.setIsPass(false);
 			vr.setReason("请求方式错误");
 			return vr;
 		}
-
-		
-		String json = HttpServletStream.getString(request);
-		request.setAttribute(ATTRIBUTE_KEY, json);
-		vr = verificationJson(json, interfac);
-
+		vr = verificationJson(parameter4json, interfac);
 		return vr;
 	}
 
@@ -65,7 +57,7 @@ public class VerificationService {
 		// ------------------------------------
 		JSONObject jsonRoot = new JSONObject();
 		try {
-			jsonRoot = JSONObject.parseObject(json);
+			jsonRoot = JSONObject.fromObject(json);
 		} catch (Exception e) {
 			vr.setIsPass(false);
 			vr.setReason("JSON数据格式异常");
@@ -84,8 +76,11 @@ public class VerificationService {
 					}
 				}
 				Object val = jsonRoot.get(key);
-				String value = val == null ? null :val.toString();//
-				map.put(key, new String[] { value });
+				if(val != null){
+					map.put(key, new String[] { val.toString() });
+					
+				}
+				 
 			}
 		}
 
@@ -132,14 +127,17 @@ public class VerificationService {
 			Integer maxLength = p.getMaxLength();
 			String[] values = map.get(key);
 			String value;
+		   if( p.getMust() != null && p.getMust()== false && values == null){
+				continue;
+			}
+			
 			if (values != null) {
 				value = values[0];
-				;
 			} else {
 				value = null;
 			}
 
-			if (values == null) {
+			if ( values == null) {
 
 				vr.setIsPass(false);
 				vr.setReason("缺少[" + key + "]参数");
@@ -190,7 +188,7 @@ public class VerificationService {
 		if (bool) {
 			vr.setReason("参数正常");
 		} else {
-			vr.setReason("[" + key + "]:格式错误");
+			vr.setReason("[" + key + "]:数据类型错误");
 		}
 		return vr;
 	}
@@ -248,8 +246,10 @@ public class VerificationService {
 	 * @return
 	 */
 	private static VerificationResult verificationArray(String json, Array array) {
-		JSONObject jsonRoot = JSONObject.parseObject(json);
-		JSONArray jsonArray = (JSONArray) jsonRoot.get(array.getKey());
+		JSONObject jsonRoot = JSONObject.fromObject(json);
+		
+		Object arrayObject =  jsonRoot.get(array.getKey());
+		JSONArray jsonArray =  JSONArray.fromObject(arrayObject);// jsonRoot.get(array.getKey());
 		VerificationResult vr = new VerificationResult();
 
 		if (jsonArray == null) {

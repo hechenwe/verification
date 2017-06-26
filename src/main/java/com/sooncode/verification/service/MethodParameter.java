@@ -13,8 +13,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
- 
- 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 import com.sooncode.verification.moduler.Array;
 import com.sooncode.verification.moduler.Method;
 import com.sooncode.verification.moduler.Parameter;
+import com.sooncode.verification_apidoc.service.DomService;
 
 /**
  * 加载参数配置文件
@@ -33,58 +34,58 @@ import com.sooncode.verification.moduler.Parameter;
  *
  */
 public class MethodParameter {
-   
-	private static final String CONTROLLER = "controller"; 
-	private static final String METHOD = "method"; 
-	private static final String PARAMETER = "parameter"; 
-	private static final String ARRAY = "array"; 
-	private static final String REF = "ref"; 
-	private static final String MUST = "must"; 
-	
-	
-	
-	//private   String path = PathUtil.getClassPath() ;
-	private   Document document;
-	public  Map<String, Parameter> paraMap = new HashMap<>();
-	public MethodParameter(File file)  {
-		     
-			String str = readFile(file);
-			InputSource inputSource = new InputSource(new StringReader(str));
-			try {
-				this.document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
-			} catch (SAXException | IOException | ParserConfigurationException e) {
 
-				e.printStackTrace();
-			}
+	private static final String CONTROLLER = "controller";
+	private static final String CHINESE_ANNOTATION = "chineseAnnotation";
+	private static final String METHOD = "method";
+	private static final String PARAMETER = "parameter";
+	private static final String ARRAY = "array";
+	private static final String REF = "ref";
+	private static final String MUST = "must";
+    public final static Log logger = LogFactory.getLog(MethodParameter.class); 
+	// private String path = PathUtil.getClassPath() ;
+	private DomService domService;
+	public Map<String, Parameter> paraMap = new HashMap<>();
 
-			this.initMethodMap();
-		 
+	public MethodParameter(File file) {
+
+		String str = readFile(file);
+		InputSource inputSource = new InputSource(new StringReader(str));
+		try {
+			Document  document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
+			this.domService = new DomService(document);
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+
+			e.printStackTrace();
+		}
+
+		this.initMethodMap();
+
 	}
 
-	private  void initMethodMap() {
+	private void initMethodMap() {
 
-		NodeList root = this.document.getElementsByTagName(CONTROLLER);
-		Node node = root.item(0); // NodeList中的某一个节点
-		NodeList list = node.getChildNodes();
+		 
+		Node node = domService.getNode4Document(CONTROLLER);
 
-		for (int i = 0; i < list.getLength(); i++) {
-			Node thisNode = list.item(i);
-			String ke = thisNode.getNodeName();
-			if (ke.equals(PARAMETER)) {
-				Parameter p = getParameter(thisNode);
-				if (p != null) {
-					 this.paraMap.put(p.getKey(), p);
-				}
+		List<Node> parameterlist = domService.getChildNodes(node, PARAMETER);
+		for (Node n : parameterlist) {
+			Parameter p = getParameter(n);
+			if (p != null) {
+				this.paraMap.put(p.getKey(), p);
 			}
-			if (ke.equals(METHOD)) {
-				Method c = getMethod(thisNode);
-				MethodParameterManager.controllerMap.put(c.getUrl(), c);
-			}
+		}
+
+		List<Node> methodlist = domService.getChildNodes(node, METHOD);
+		for (Node n : methodlist) {
+			Method c = getMethod(n);
+			MethodParameterManager.controllerMap.put(c.getUrl(), c);
+			logger.debug("[parameter_verification]"+c.getUrl());
 		}
 
 	}
 
-	private   Method getMethod(Node node) {
+	private Method getMethod(Node node) {
 		NamedNodeMap nnm = node.getAttributes();
 		RObject rObj = new RObject(Method.class);
 		for (int i = 0; i < nnm.getLength(); i++) {
@@ -107,11 +108,11 @@ public class MethodParameter {
 				newPar.setKey(p.getKey());
 				newPar.setMaxLength(p.getMaxLength());
 				newPar.setType(p.getType());
-				
-				if(getParameterMust(n)){
+
+				if (getParameterMust(n)) {
 					newPar.setMust(true);
-					
-				}else{
+
+				} else {
 					newPar.setMust(false);
 				}
 				parameters.add(newPar);
@@ -123,11 +124,10 @@ public class MethodParameter {
 		}
 		c.setParameters(parameters);
 		c.setArrays(arrays);
-		System.out.println("MethodParameter.getMethod()*****"+c);
 		return c;
 	}
 
-	private   Array getArray(Node node) {
+	private Array getArray(Node node) {
 		NamedNodeMap nnm = node.getAttributes();
 		RObject rObj = new RObject(Array.class);
 		for (int i = 0; i < nnm.getLength(); i++) {
@@ -153,7 +153,7 @@ public class MethodParameter {
 		return a;
 	}
 
-	private   Parameter getParameter(Node node) {
+	private Parameter getParameter(Node node) {
 
 		NamedNodeMap nnm = node.getAttributes();
 		RObject rObj = new RObject(Parameter.class);
@@ -171,9 +171,9 @@ public class MethodParameter {
 			Class<?> clas = rObj.getSetMethodParamertType(name);
 			if (clas == Integer.class) {
 				rObj.invokeSetMethod(name, Integer.parseInt(value));
-			}else if(clas == Boolean.class){
+			} else if (clas == Boolean.class) {
 				rObj.invokeSetMethod(name, Boolean.parseBoolean(value));
-			}else {
+			} else {
 				rObj.invokeSetMethod(name, value);
 			}
 		}
@@ -188,9 +188,8 @@ public class MethodParameter {
 		return p;
 
 	}
-	
-	
-	private  boolean getParameterMust(Node node) {
+
+	private boolean getParameterMust(Node node) {
 		NamedNodeMap nnm = node.getAttributes();
 		for (int i = 0; i < nnm.getLength(); i++) {
 			Node n = nnm.item(i);
@@ -198,18 +197,20 @@ public class MethodParameter {
 			String value = n.getNodeValue();
 			if (name.equals(MUST) && value.trim().equals("false")) {
 				return false;
-			} 
-			 
+			}
+
 		}
-		 return true;
+		return true;
 	}
-/**
- * 读文件
- * @param file
- * @return
- */
+
+	/**
+	 * 读文件
+	 * 
+	 * @param file
+	 * @return
+	 */
 	private static String readFile(File file) {
-		 
+
 		if (!file.exists() || file.isDirectory()) {
 			return null;
 		}
@@ -229,8 +230,5 @@ public class MethodParameter {
 		}
 		return sb.toString();
 	}
-
-	 
- 
 
 }
