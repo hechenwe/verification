@@ -3,18 +3,31 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
-    <servlet>
-        <servlet-name>dispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:dispatcher-servlet.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-      <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+	<display-name>Archetype Created Web Application</display-name>
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>parameterVerificationFilter</filter-name>
+		<filter-class>com.sooncode.verification.filter.ParameterVerificationFilter</filter-class>
+		<init-param>
+			<param-name>confLocation</param-name>
+			<param-value>classpath:/parameter</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>parameterVerificationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>

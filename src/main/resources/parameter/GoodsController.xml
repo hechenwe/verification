@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controller   chineseAnnotation ="代理书籍"  >
+
+	<parameter chineseAnnotation ="代理机构代码" key="agencyCode" type="STRING" maxLength="32" example= "73223BD164674D23B37494C2F7206F4C" ></parameter>
+	<parameter chineseAnnotation ="代理等级" key="agencyRank" type="INTEGER" maxLength="11" example= "1" ></parameter>
+	 
+	<method chineseAnnotation ="获取代理机构 代理的书籍" url="goodsController/getAgencyGoodses" method="POST"   >
+		 
+		<parameter ref="agencyCode"></parameter>
+		<parameter ref="agencyRank"></parameter>
+	</method> 
+	
+	 
+</controller>
+
+ 

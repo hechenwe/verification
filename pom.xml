@@ -84,15 +84,30 @@
 		</dependency>
      
      
-     
-     
-
-		<!-- jackson-all Spring 依赖包 -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-all</artifactId>
-			<version>1.7.1</version>
+     <dependency>
+    		<groupId>org.aspectj</groupId>
+    		<artifactId>aspectjweaver</artifactId>
+    		<version>1.6.10</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+			<version>1.0</version> 
+		</dependency>
+     
+     <dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.41</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		 
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -105,6 +120,13 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
 		</dependency>
   </dependencies>
   <build>
