@@ -3,7 +3,6 @@ package com.sooncode.verification.service.intercepter.method;
 
 import com.sooncode.verification.moduler.VerificationResult;
 import com.sooncode.verification.service.intercepter.VerificationElement;
-import com.sooncode.verification.service.intercepter.VerificationIntercepter;
 
 public class RequestMethodVerificationIntercepter implements VerificationIntercepter {
 

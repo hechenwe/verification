@@ -8,11 +8,11 @@ import com.sooncode.verification.moduler.Method;
 import com.sooncode.verification.moduler.Parameter;
 import com.sooncode.verification.moduler.VerificationResult;
 import com.sooncode.verification.service.intercepter.VerificationElement;
-import com.sooncode.verification.service.intercepter.VerificationIntercepterChain;
 import com.sooncode.verification.service.intercepter.method.ArrayVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.method.JsonFormatVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.method.ParameterVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.method.RequestMethodVerificationIntercepter;
+import com.sooncode.verification.service.intercepter.method.VerificationIntercepterChain;
 
 public class VerificationService {
 

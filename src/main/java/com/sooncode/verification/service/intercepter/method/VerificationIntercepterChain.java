@@ -1,9 +1,10 @@
-package com.sooncode.verification.service.intercepter;
+package com.sooncode.verification.service.intercepter.method;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import com.sooncode.verification.moduler.VerificationResult;
+import com.sooncode.verification.service.intercepter.VerificationElement;
 
 public class VerificationIntercepterChain  implements VerificationIntercepter{
 

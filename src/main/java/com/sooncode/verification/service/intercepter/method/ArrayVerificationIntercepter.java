@@ -7,7 +7,6 @@ import com.sooncode.verification.moduler.Array;
 import com.sooncode.verification.moduler.Parameter;
 import com.sooncode.verification.moduler.VerificationResult;
 import com.sooncode.verification.service.intercepter.VerificationElement;
-import com.sooncode.verification.service.intercepter.VerificationIntercepter;
 import com.sooncode.verification.service.intercepter.parameter.ParameterEnumerationVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.parameter.ParameterExistVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.parameter.ParameterLengthVerificationIntercepter;
