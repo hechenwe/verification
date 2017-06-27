@@ -52,13 +52,14 @@ public class ParameterVerificationFilter extends GenericFilterBean
             ServletRequest requestWrapper = new BodyReaderHttpServletRequestWrapper(httpServletRequest);
             String jsonData = HttpHelper.getBodyString(requestWrapper);
             
-            Method i = MethodParameterManager.getMethod(httpServletRequest.getRequestURI());
-            if (i == null) {
+            Method method = MethodParameterManager.getMethod(httpServletRequest.getRequestURI());
+            if (method == null) {
                 logger.warn("[parameter_verification] '" + httpServletRequest.getRequestURL() + "'接口 ,没有参数描述");
                 
             }
             
-            VerificationResult vr = VerificationService.verificationInterface(httpServletRequest.getMethod(), jsonData, i);
+            
+            VerificationResult vr = VerificationService.verification(jsonData,  method , httpServletRequest.getMethod());
             
             if(vr.getIsPass()){
             	filterChain.doFilter(requestWrapper, response);

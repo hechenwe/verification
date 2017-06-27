@@ -26,7 +26,7 @@ public class HttpServletStream {
 	 */
 	public static final String getString(HttpServletRequest request) {
 		
-		String jsonString = (String) request.getAttribute(VerificationService.ATTRIBUTE_KEY);
+		String jsonString = (String) request.getAttribute(VerificationServiceOld.ATTRIBUTE_KEY);
 		if(jsonString!=null){
 			return jsonString;
 		}

@@ -36,7 +36,7 @@ import com.sooncode.verification_apidoc.service.DomService;
 public class MethodParameter {
 
 	private static final String CONTROLLER = "controller";
-	private static final String CHINESE_ANNOTATION = "chineseAnnotation";
+	//private static final String CHINESE_ANNOTATION = "chineseAnnotation";
 	private static final String METHOD = "method";
 	private static final String PARAMETER = "parameter";
 	private static final String ARRAY = "array";

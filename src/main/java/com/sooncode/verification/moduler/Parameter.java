@@ -16,6 +16,10 @@ package com.sooncode.verification.moduler;
 	/**参数值 最大长度*/
 	private Integer maxLength;
 	
+	
+	/**参数值 最小长度*/
+	private Integer minLength;
+	
 	/**是否必须*/
 	private Boolean must;
 	
@@ -83,16 +87,17 @@ package com.sooncode.verification.moduler;
 
 
 
-
-
-	@Override
-	public String toString() {
-		return "{\"key\":\"" + key + "\",\"type\":\"" + type + "\",\"maxLength\":\"" + maxLength + "\",\"enumeration\":\"" + enumeration + "\"} must: "+must;
+	public Integer getMinLength() {
+		return minLength;
 	}
+
+
+
+	public void setMinLength(Integer minLength) {
+		this.minLength = minLength;
+	}
+
  
-
-	
-
 
 	 
 	
