@@ -3,8 +3,8 @@ package com.sooncode.verification.service.intercepter.parameter;
 import com.sooncode.verification.moduler.Parameter;
 import com.sooncode.verification.moduler.VerificationResult;
 
-public interface ParameterVerificationIntercepter {
+public interface ParameterVerificationIntercepterChainI {
 	
-	public VerificationResult doIntercepter(String key,Object value, Parameter p ,ParameterVerificationIntercepterChainI thisChain);
+	public VerificationResult doIntercepter(String key,Object value, Parameter p);
 	
 }

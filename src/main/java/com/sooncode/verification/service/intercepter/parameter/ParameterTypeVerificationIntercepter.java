@@ -7,7 +7,7 @@ import com.sooncode.verification.service.RegexService;
 public class ParameterTypeVerificationIntercepter implements ParameterVerificationIntercepter {
 
 	@Override
-	public VerificationResult doIntercepter(String key, Object value, Parameter p, ParameterVerificationIntercepter pviChain) {
+	public VerificationResult doIntercepter(String key, Object value, Parameter p, ParameterVerificationIntercepterChainI thisChain) {
 		VerificationResult vr = new VerificationResult();
 		 
         if(value != null){
@@ -18,7 +18,7 @@ public class ParameterTypeVerificationIntercepter implements ParameterVerificati
         	 return vr;
         	}  
         }
-		return pviChain.doIntercepter(key, value, p, pviChain);
+		return thisChain.doIntercepter(key, value, p);
 	}
 
 }

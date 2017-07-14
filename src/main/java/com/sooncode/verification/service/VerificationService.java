@@ -29,12 +29,12 @@ public class VerificationService {
 		   .add(ParameterVerificationIntercepter.class)
 		   .add(ArrayVerificationIntercepter.class);
 		 
-		return vic.doIntercepter(ve, vic);
+		return vic.doIntercepter(ve);
 
 	}
 
 	public static void main(String[] args) {
-		String jsonData = "{\"id\":\"88888888\",\"types\":[{\"type1\":\"BBB\"},{\"type2\":\"AAA\"}]}";
+		String jsonData = "{\"id\":\"88888888\",\"types\":[{\"type1\":\"BBc\"}]}";
 		Method method = new Method();
 		method.setMethod("POST");
 
@@ -53,7 +53,7 @@ public class VerificationService {
 		Array a = new Array();
 		a.setKey("types");
 		Parameter type1 = new Parameter();
-		type1.setKey("type2");
+		type1.setKey("type1");
 		type1.setMaxLength(32);
 		type1.setMinLength(3);
 		type1.setMust(true);

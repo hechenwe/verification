@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * HttpServlet 流
@@ -24,7 +24,7 @@ public class HttpServletStream {
 	 * @param contentLen
 	 * @return
 	 */
-	public static final String getString(HttpServletRequest request) {
+	public static final String getString(ServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e1) {
@@ -68,7 +68,7 @@ public class HttpServletStream {
 	 * @param jsonString
 	 * @param response
 	 */
-	public static void putString(String string, HttpServletResponse response) {
+	public static void putString(String string, ServletResponse response) {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter printWriter = null;

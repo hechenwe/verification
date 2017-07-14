@@ -49,20 +49,21 @@ public class ParameterVerificationFilter extends GenericFilterBean
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 		    HttpServletRequest httpServletRequest = (HttpServletRequest) request;
        
-            ServletRequest requestWrapper = new BodyReaderHttpServletRequestWrapper(httpServletRequest);
-            String jsonData = HttpHelper.getBodyString(requestWrapper);
+            ServletRequest servletRequest = new BodyReaderHttpServletRequestWrapper(httpServletRequest);
+            String jsonData = HttpServletStream.getString(servletRequest); 
             
             Method method = MethodParameterManager.getMethod(httpServletRequest.getRequestURI());
             if (method == null) {
                 logger.warn("[parameter_verification] '" + httpServletRequest.getRequestURL() + "'接口 ,没有参数描述");
-                
+                filterChain.doFilter(servletRequest, response);
+                return ;
             }
             
             
             VerificationResult vr = VerificationService.verification(jsonData,  method , httpServletRequest.getMethod());
             
             if(vr.getIsPass()){
-            	filterChain.doFilter(requestWrapper, response);
+            	filterChain.doFilter(servletRequest, response);
             }else{
             	     Map<String ,Object> map = new HashMap<>();
                      RespondHead rd = new RespondHead();

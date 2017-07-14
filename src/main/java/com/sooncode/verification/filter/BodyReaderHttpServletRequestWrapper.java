@@ -15,18 +15,19 @@ public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapp
 
 	public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) {
 		super(request);
-		body = HttpHelper.getBodyString(request).getBytes(Charset.forName("UTF-8"));
+		String data = HttpServletStream.getString(request);
+		this.body = data.getBytes(Charset.forName("UTF-8"));
 	}
 
 	@Override
 	public BufferedReader getReader() throws IOException {
-		return new BufferedReader(new InputStreamReader(getInputStream()));
+		return new BufferedReader(new InputStreamReader(this.getInputStream()));
 	}
 
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
 
-		final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+		final ByteArrayInputStream bais = new ByteArrayInputStream(this.body);
 
 		return new ServletInputStream() {
 

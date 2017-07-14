@@ -2,11 +2,8 @@ package com.sooncode.verification.service;
 
  
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -17,55 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class HttpServletStream {
 
-	/**
-	 * 读取字符流
-	 * 
-	 * @param is
-	 * @param contentLen
-	 * @return
-	 */
-	public static final String getString(HttpServletRequest request) {
-		
-		String jsonString = (String) request.getAttribute(VerificationServiceOld.ATTRIBUTE_KEY);
-		if(jsonString!=null){
-			return jsonString;
-		}
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			 
-			e1.printStackTrace();
-		}
-		int contentLen = request.getContentLength();
-		if (contentLen > 0) {
-			int readLen = 0;
-
-			int readLengthThisTime = 0;
-
-			byte[] message = new byte[contentLen];
-
-			try {
-				InputStream inputStream = request.getInputStream();
-				while (readLen != contentLen) {
-
-					readLengthThisTime = inputStream.read(message, readLen, contentLen - readLen);
-					if (readLengthThisTime == -1) {// Should not happen.
-						break;
-					}
-
-					readLen += readLengthThisTime;
-				}
-				 
-
-				return new String(message);
-			} catch (IOException e) {
-
-			}
-		}
-		
-
-		return null;
-	}
+	 
 	
 	/**
 	 * 将字符串写入response输入流中

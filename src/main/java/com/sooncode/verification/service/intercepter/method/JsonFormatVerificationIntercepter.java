@@ -9,7 +9,7 @@ public class JsonFormatVerificationIntercepter implements VerificationIntercepte
 	private static final String JSON_FORMAT_ERROR = "JSON数据格式错误,或数据类型错误";
 
 	@Override
-	public VerificationResult doIntercepter(VerificationElement ve, VerificationIntercepter vi) {
+	public VerificationResult doIntercepter(VerificationElement ve, VerificationIntercepterChainI thisChain) {
 		String jsonDataString = ve.getJsonData();//
 
 		VerificationResult vr = new VerificationResult();
@@ -20,7 +20,7 @@ public class JsonFormatVerificationIntercepter implements VerificationIntercepte
 			return vr;
 		}
 
-		return vi.doIntercepter(ve, vi);
+		return thisChain.doIntercepter(ve);
 
 	}
 

@@ -9,7 +9,7 @@ public class RequestMethodVerificationIntercepter implements VerificationInterce
 	private static final String REQUEST_METHOD_ERROR = "请求方式错误";
 
 	@Override
-	public VerificationResult doIntercepter(VerificationElement ve,VerificationIntercepter vi) {
+	public VerificationResult doIntercepter(VerificationElement ve,VerificationIntercepterChainI thisChain) {
 
 		 
 		VerificationResult vr = new VerificationResult();
@@ -18,7 +18,7 @@ public class RequestMethodVerificationIntercepter implements VerificationInterce
 			vr.setReason(REQUEST_METHOD_ERROR);
 			return vr;
 		}else{
-			return vi.doIntercepter(ve, vi);
+			return thisChain.doIntercepter(ve);
 		}
 
 	}

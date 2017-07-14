@@ -6,14 +6,17 @@ import java.util.List;
 import com.sooncode.verification.moduler.Parameter;
 import com.sooncode.verification.moduler.VerificationResult;
 
-public class ParameterVerificationIntercepterChain  implements ParameterVerificationIntercepter{
+public class ParameterVerificationIntercepterChain  implements ParameterVerificationIntercepterChainI{
 
 	
 	private List<ParameterVerificationIntercepter> pvies = new LinkedList<>();
 	
 	private int index = 0;
 	
-	 
+	public ParameterVerificationIntercepterChain add(ParameterVerificationIntercepter pvi){
+		pvies.add(pvi);
+		return this;
+	}
 	
 	public  ParameterVerificationIntercepterChain add(Class< ? extends ParameterVerificationIntercepter > clas){
 		try {
@@ -28,7 +31,7 @@ public class ParameterVerificationIntercepterChain  implements ParameterVerifica
 	}
 	 
 	@Override
-	public VerificationResult doIntercepter(String key, Object value, Parameter p, ParameterVerificationIntercepter pviChain) {
+	public VerificationResult doIntercepter(String key, Object value, Parameter p) {
 		if(index >= pvies.size()){
 			VerificationResult vr = new VerificationResult();
         	vr.setIsPass(true);
@@ -39,7 +42,7 @@ public class ParameterVerificationIntercepterChain  implements ParameterVerifica
 		ParameterVerificationIntercepter pvi = pvies.get(this.index);
 		index ++ ;
 		
-		return pvi.doIntercepter(key, value, p, pviChain);
+		return pvi.doIntercepter(key, value, p,this);
 	}
 
 }

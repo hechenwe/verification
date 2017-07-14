@@ -13,34 +13,41 @@ import com.sooncode.verification.service.intercepter.parameter.ParameterTypeVeri
 import com.sooncode.verification.service.intercepter.parameter.ParameterVerificationIntercepterChain;
 
 public class ParameterVerificationIntercepter implements VerificationIntercepter {
- 
+
 	@Override
-	public VerificationResult doIntercepter(VerificationElement ve, VerificationIntercepter nextChain) {
+	public VerificationResult doIntercepter(VerificationElement ve, VerificationIntercepterChainI thisChain) {
 
 		String jsonData = ve.getJsonData();
 		JSONObject jsonRoot = JSONObject.parseObject(jsonData);
 		List<Parameter> parameters = ve.getMethod().getParameters();
-		
+
 		for (Parameter p : parameters) {
 			String key = p.getKey();
 			Object value = jsonRoot.get(key);
-			ParameterVerificationIntercepterChain pviChain = new ParameterVerificationIntercepterChain();
-			pviChain.add(ParameterExistVerificationIntercepter.class)
-			.add(ParameterLengthVerificationIntercepter.class)
-			.add(ParameterTypeVerificationIntercepter.class)
-			.add(ParameterEnumerationVerificationIntercepter.class);
-			
-			VerificationResult thisVR  = pviChain.doIntercepter(key, value, p, pviChain);
-			if(thisVR == null || thisVR.getIsPass()){
+			VerificationResult thisVR = verificationParameter(p, value);
+			if (thisVR == null || thisVR.getIsPass()) {
 				continue;
-			}else{
+			} else {
 				return thisVR;
 			}
-			
+
 		}
-		
-		return nextChain.doIntercepter(ve, nextChain);
-		 
+
+		return thisChain.doIntercepter(ve);
+
+	}
+
+	static VerificationResult verificationParameter(Parameter p, Object value) {
+		String key = p.getKey();
+		ParameterVerificationIntercepterChain pviChain = new ParameterVerificationIntercepterChain();
+		pviChain.add(ParameterExistVerificationIntercepter.class)
+				.add(ParameterLengthVerificationIntercepter.class)
+				.add(ParameterTypeVerificationIntercepter.class)
+				.add(ParameterEnumerationVerificationIntercepter.class);
+
+		VerificationResult thisVR = pviChain.doIntercepter(key, value, p);
+
+		return thisVR;
 	}
 
 }

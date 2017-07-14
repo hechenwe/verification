@@ -6,7 +6,7 @@ import com.sooncode.verification.moduler.VerificationResult;
 public class ParameterExistVerificationIntercepter implements ParameterVerificationIntercepter {
 
 	@Override
-	public VerificationResult doIntercepter(String key, Object value, Parameter p, ParameterVerificationIntercepter pviChain) {
+	public VerificationResult doIntercepter(String key, Object value, Parameter p, ParameterVerificationIntercepterChainI thisChain) {
 		VerificationResult vr = new VerificationResult();
 		boolean parameterIsMust = (p.getMust() == null || p.getMust() == true);
 		if (parameterIsMust) {
@@ -17,7 +17,7 @@ public class ParameterExistVerificationIntercepter implements ParameterVerificat
 			}
 		}
 		
-		return pviChain.doIntercepter(key, value, p, pviChain);
+		return thisChain.doIntercepter(key, value, p);
 	}
 
 }
