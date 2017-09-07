@@ -16,22 +16,11 @@
     <context:component-scan base-package="com.sooncode.verification_test"/>
     <mvc:annotation-driven />
      
-	<!--参数验证拦截器 开始 -->
 	 
-   <!--  <aop:aspectj-autoproxy proxy-target-class="true"/>
-	<bean id="verifyAspectBean" class="com.sooncode.verification.aop.VerifyControllerAop">
-	   <property name="confLocation" value="classpath:/parameter" />
-    </bean> -->
-    
-    
-    
-	<!-- <aop:config>
-		<aop:aspect id="verifyAspect" ref="verifyAspectBean" order="1">
-			<aop:pointcut id="cutPoint" expression="execution(* com.sooncode.verification_test.*.*(..))"/>
-			<aop:around pointcut-ref="cutPoint" method="doAroundController" />
-		</aop:aspect>
-	</aop:config> -->
-    <!--  <bean id = "apiDocAop" class = "com.sooncode.verification_apidoc.service.ApiDocAop">
+	 
+   
+	 
+     <!-- <bean id = "apiDocAop" class = "com.sooncode.verification_apidoc.service.ApiDocAop">
     
     <property name="authorName" value="hechen" />
     <property name="projectCode" value="verification" />
@@ -40,7 +29,7 @@
     <property name="companyId" value="2582B1DAF550485980F519096F3ACEC1" />
     <property name="confLocation" value="classpath:/parameter" />
     <property name="apiDocServiceUrl"  value="http://127.0.0.1:8081/api-doc" />
-    </bean>   -->
+    </bean>  -->   
     
     
     <!-- 用于将对象转换为 JSON：请求和返回2个必须配置 -->

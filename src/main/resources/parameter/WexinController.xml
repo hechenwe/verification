@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<controller chineseAnnotation ="微信支付"  >
+<controller chineseAnnotation="微信支付">
 
-	<parameter chineseAnnotation ="公开编号" key="openId" type="INTEGER" maxLength="11" example= "1" ></parameter>
-	<parameter chineseAnnotation ="密码" key="password" type="STRING" maxLength="64" example= "SFSLDKJFLKDF" ></parameter>
-	 
-	<method chineseAnnotation ="微信支付统一下单" url="weixin/getInfo" method="POST"   >
-		<parameter chineseAnnotation ="手机号码" key="mobile" type="STRING" maxLength="11" example= "13681004142"></parameter>
-		<parameter ref="openId" must="false" ></parameter>
+	<parameter chineseAnnotation="公开编号" key="openId" type="INTEGER" maxLength="11" example="1"></parameter>
+	<parameter chineseAnnotation="密码" key="password" type="STRING" maxLength="64" example="SFSLDKJFLKDF"></parameter>
+
+	<method chineseAnnotation="微信支付统一下单" url="weixin/getInfo" method="POST">
+		<parameter chineseAnnotation="手机号码" key="mobile" type="STRING" maxLength="11" example="13681004142"></parameter>
+		<parameter ref="openId" must="false"></parameter>
 		<parameter ref="password"></parameter>
-		<array chineseAnnotation ="类型" key="types">
-			<parameter key="type1" type="STRING" maxLength="32" enumeration="AAA;BBB" example= "AAA" ></parameter>
-			<parameter key="type2" type="STRING" maxLength="32" enumeration="CCC;DDD" example= "CCC" ></parameter>
+		<array chineseAnnotation="类型" key="types">
+			<parameter key="type1" type="STRING" maxLength="32" enumeration="AAA;BBB" example="AAA"></parameter>
+			<parameter key="type2" type="STRING" maxLength="32" enumeration="CCC;DDD" example="CCC"></parameter>
 		</array>
-	</method> 
-	
-	
-	<method chineseAnnotation ="微信支付统一下单2" url="weixin/getInfo2" method="POST"   >
-		 
-		<parameter ref="openId" must="false" ></parameter>
+	</method>
+
+
+	<method chineseAnnotation="微信支付统一下单2" url="weixin/getInfo2" method="POST">
+
+		<parameter ref="openId" must="false"></parameter>
 		<parameter ref="password"></parameter>
-		 
-	</method> 
-	  
-	
-	 
+
+	</method>
+ 
+
 </controller>
 
 
 
 
- <!-- 
-	 {"mobile":"234345","openId":"asdfffffffffff","password":"123","types":[{"type":"BBB"}]}
--->
+<!-- {"mobile":"11631004129","openId":"123","password":"LKSDFJLKDJFJDK43KLSJDFLSK","types":[{"type1":"BBB","type2":"CCC"}]} -->

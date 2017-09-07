@@ -28,6 +28,14 @@ import net.sf.json.JSONObject;
 public class ParameterVerificationFilter extends GenericFilterBean 
 {
 
+	 public static  String regexConfLocation ;
+	 
+	  
+	 public void setRegexConfLocation(String regexLocation) {
+		 regexConfLocation = regexLocation;
+	 }
+	 
+	
 	 public void setConfLocation(String confLocation) throws FileNotFoundException{
 	        
 	        File file =  ResourceUtils.getFile(confLocation);

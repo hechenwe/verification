@@ -2,8 +2,10 @@ package com.sooncode.verification_apidoc.service;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -243,13 +245,15 @@ public class ModuleModelService {
 		BufferedReader br;
 		StringBuffer sb = new StringBuffer();
 		try {
-			br = new BufferedReader(new FileReader(file));
+			InputStreamReader isr = new InputStreamReader(new FileInputStream(file), "UTF-8");
+			br = new BufferedReader(isr);
 			String temp = null;
 			temp = br.readLine();
 			while (temp != null) {
 				sb.append(temp + " ");
 				temp = br.readLine();
 			}
+			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
