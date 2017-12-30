@@ -16,7 +16,8 @@ public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapp
 	public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) {
 		super(request);
 		String data = HttpServletStream.getString(request);
-		this.body = data.getBytes(Charset.forName("UTF-8"));
+		 
+		this.body = ( data == null  ?  new byte[0]  : data.getBytes(Charset.forName("UTF-8")) ) ;
 	}
 
 	@Override
