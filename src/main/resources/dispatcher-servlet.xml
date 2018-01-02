@@ -19,17 +19,16 @@
 	 
 	 
    
-	 
-     <!-- <bean id = "apiDocAop" class = "com.sooncode.verification_apidoc.service.ApiDocAop">
+	  <bean id = "apiDocAop" class = "com.sooncode.verification_apidoc.service.ApiDocAop">
     
-    <property name="authorName" value="hechen" />
-    <property name="projectCode" value="verification" />
-    <property name="projectName" value="参数验证项目" />
-    <property name="urlPrefix" value="http://pengyuntest.e-eduspace.com/synchrotutorship-publishers-distributor" />
+    <property name="authorName" value="hechen9" />
+    <property name="projectCode" value="operation_platform_dev" />
+    <property name="projectName" value="运营平台开发环境" />
+    <property name="urlPrefix" value="http://127.0.0.1:9090/operation_platform" />
     <property name="companyId" value="2582B1DAF550485980F519096F3ACEC1" />
-    <property name="confLocation" value="classpath:/parameter" />
-    <property name="apiDocServiceUrl"  value="http://127.0.0.1:8081/api-doc" />
-    </bean>  -->   
+    <property name="confLocation" value="classpath:parameter" />
+    <property name="apiDocServiceUrl"  value="http://www.sooncode.com:9090/api_doc" />
+    </bean>   
     
     
     <!-- 用于将对象转换为 JSON：请求和返回2个必须配置 -->

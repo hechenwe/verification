@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controller chineseAnnotation="交易监控规则">
+
+	<parameter chineseAnnotation="业务系统代码"   key="businessSystemCode"       type="STRING" maxLength="32" example="NEW"></parameter>
+	<parameter chineseAnnotation="密码"         key="ruleId"                   type="STRING" maxLength="32" example="0001"></parameter>
+	<parameter chineseAnnotation="规则类型代码"   key="ruleTypeCode"             type="STRING" maxLength="32" example="CODE"></parameter>
+	<parameter chineseAnnotation="规则名称"      key="ruleLibraryName"          type="STRING" maxLength="64" example="响应码规则"></parameter>
+	<parameter chineseAnnotation="邮件组编号"     key="emailGroup"               type="STRING" maxLength="64" example="001"></parameter>
+	<parameter chineseAnnotation="短信组编号"     key="smsGroup"                 type="STRING" maxLength="64" example="001"></parameter>
+	<parameter chineseAnnotation="处理方案"      key="remark"                    type="STRING" maxLength="128" example="联系商家"></parameter>
+
+	<method chineseAnnotation="添加监控规则" url="monitorRuleController/addMonitorRule" method="POST">
+		 
+		<parameter ref="businessSystemCode"></parameter>
+		<parameter ref="ruleId"></parameter>
+		<parameter ref="ruleTypeCode"></parameter>
+		<parameter ref="ruleLibraryName"></parameter>
+		<parameter ref="emailGroup"></parameter>
+		<parameter ref="smsGroup"></parameter>
+		<parameter ref="remark"></parameter>
+		 
+		<array chineseAnnotation="规则描述" key="ruleDescriptionModels">
+			<parameter key="ruleDescriptionCode" type="STRING" maxLength="32"  example="MONITOR_TYPE"></parameter>
+			<parameter key="ruleDescriptionName" type="STRING" maxLength="32"   example="监控类型"></parameter>
+			<parameter key="ruleDescriptionContent" type="STRING" maxLength="32"   example="01"></parameter>
+			<parameter key="ruleDescription" type="INTEGER" maxLength="11"  example="1"></parameter>
+		</array>
+		 
+		 
+	</method>
+ 
+ 
+
+</controller>
+
+
+
+
+<!-- {"mobile":"11631004129","openId":"123","password":"LKSDFJLKDJFJDK43KLSJDFLSK","types":[{"type1":"BBB","type2":"CCC"}]} -->

@@ -20,20 +20,6 @@
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
-	<filter>
-		<filter-name>parameterVerificationFilter</filter-name>
-		<filter-class>com.sooncode.verification.filter.ParameterVerificationFilter</filter-class>
-		<init-param>
-			<param-name>confLocation</param-name>
-			<param-value>classpath:/parameter</param-value>
-		</init-param>
-		<init-param>
-			<param-name>regexConfLocation</param-name>
-			<param-value>classpath:/regex.properties</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>parameterVerificationFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	 
+ 
 </web-app>

@@ -1,5 +1,7 @@
 package com.sooncode.verification_apidoc.service;
 
+import java.util.List;
+
 import com.sooncode.verification_apidoc.model.AddInterfacModel;
 import com.sooncode.verification_apidoc.model.AddModuleModel;
 import com.sooncode.verification_apidoc.model.AddParameterModel;
@@ -8,6 +10,8 @@ import com.sooncode.verification_apidoc.model.InterfacModel;
 import com.sooncode.verification_apidoc.model.ModuleModel;
 import com.sooncode.verification_apidoc.model.ParameterModel;
 import com.sooncode.verification_apidoc.model.ProjectModel;
+
+import net.sf.json.JSONArray;
 
 public class HttpSaveModelService {
 
@@ -59,6 +63,17 @@ public class HttpSaveModelService {
 		SJson resultJson = new SJson(result);
 		String id = (String) resultJson.getFields("parameterId");
 		return id;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public void saveParameters(List<ParameterModel> parameterModels){
+		String urlString = url+"/parameterController/addParameter";
+		List<AddParameterModel>  addPMs =  (List<AddParameterModel>) RObject.tos(parameterModels , AddParameterModel.class);
+		 
+		JSONArray array = JSONArray.fromObject(addPMs);
+		HttpRequest.postRequest(urlString, array.toString());
+		 
 	}
 	
 }

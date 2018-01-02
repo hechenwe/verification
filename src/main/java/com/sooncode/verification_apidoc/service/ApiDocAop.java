@@ -104,8 +104,9 @@ public class ApiDocAop {
 				String interfacId = hsms.saveInterfac(im);
 				for(ParameterModel pm : im.getParameterModels()){
 					pm.setInterfacId(interfacId);
-				    hsms.saveParameter(pm);
+				    //hsms.saveParameter(pm);
 				}
+				hsms.saveParameters(im.getParameterModels());
 			}
 		}
     }
