@@ -103,10 +103,37 @@ public class ApiDocAop {
 				Map<String,Object> map = getMap4Json4Interfac(im);
 				im.setJsonParameters(getJsonString(map));
 				String interfacId = hsms.saveInterfac(im);
-				for(ParameterModel pm : im.getParameterModels()){
+				
+				List<ParameterModel> pmes = im.getParameterModels();
+				
+				for(ParameterModel pm : pmes){
 					pm.setInterfacId(interfacId);
 				}
-				hsms.saveParameters(im.getParameterModels());
+				
+				for(ArrayModel am :im.getArrayModels()) {
+					
+					ParameterModel pm = new ParameterModel();
+					pm.setInterfacId(interfacId);
+					pm.setIsMust("true");
+					pm.setParameterCode(am.getKey());
+					pm.setParameterName(am.getChineseAnnotation());
+					pm.setMaxLength(Integer.MAX_VALUE);
+					pm.setMinLength(0);
+					pm.setParameterDataType("JsonArray");
+					pm.setParameterExample("");
+				 
+					pmes.add(pm);
+					List<ParameterModel> pmes4ArrayModel = am.getParameterModels();
+
+					for(ParameterModel pm4ArrayModel : pmes4ArrayModel){
+						pm4ArrayModel.setInterfacId(interfacId);
+					}
+					pmes.addAll(pmes4ArrayModel);
+				}
+				
+				hsms.saveParameters(pmes);
+				
+				
 				for(ParameterModel pm : im.getParameterReturModels()){
 					pm.setInterfacId(interfacId);
 				}

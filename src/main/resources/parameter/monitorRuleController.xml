@@ -20,12 +20,15 @@
 		<parameter ref="remark"></parameter>
 		 
 		<array chineseAnnotation="规则描述" key="ruleDescriptionModels">
-			<parameter key="ruleDescriptionCode" type="STRING" maxLength="32"  example="MONITOR_TYPE"></parameter>
-			<parameter key="ruleDescriptionName" type="STRING" maxLength="32"   example="监控类型"></parameter>
-			<parameter key="ruleDescriptionContent" type="STRING" maxLength="32"   example="01"></parameter>
-			<parameter key="ruleDescription" type="INTEGER" maxLength="11"  example="1"></parameter>
+			<parameter key="ruleDescriptionCode" chineseAnnotation="规则描述代码"  type="STRING" maxLength="32"  example="MONITOR_TYPE"></parameter>
+			<parameter key="ruleDescriptionName" chineseAnnotation="规则描述名称 "  type="STRING" maxLength="32"   example="监控类型"></parameter>
+			<parameter key="ruleDescriptionContent" chineseAnnotation="规则描述内容"  type="STRING" maxLength="32"   example="01"></parameter>
+			<parameter key="ruleDescription"  chineseAnnotation="规则描述序号" type="INTEGER" maxLength="11"  example="1"></parameter>
 		</array>
-		 
+		
+		
+		
+		 <parameter-return key="save" chineseAnnotation="保存" type="STRING" maxLength="32"  example="SUCCESS" ></parameter-return>
 		 
 	</method>
  
