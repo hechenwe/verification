@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -104,20 +105,34 @@ public class ApiDocAop {
 				String interfacId = hsms.saveInterfac(im);
 				for(ParameterModel pm : im.getParameterModels()){
 					pm.setInterfacId(interfacId);
-				    //hsms.saveParameter(pm);
 				}
 				hsms.saveParameters(im.getParameterModels());
+				for(ParameterModel pm : im.getParameterReturModels()){
+					pm.setInterfacId(interfacId);
+				}
+				
+				hsms.saveParameterReturn(im.getParameterReturModels());
 			}
 		}
     }
  
     
-    public Map<String,Object> getParameter4Json (List<ParameterModel> pmes){
+    public List<Map<String,Object>> getParameter4ArrayJson (List<ParameterModel> pmes){
     	
+    	List<Map<String,Object>> list = new LinkedList<>();
     	Map<String,Object> map = new HashMap<>();
     	for (ParameterModel pm : pmes) {
     		map.put(pm.getParameterCode(), pm.getParameterExample());
     		
+    	}
+    	list.add(map);
+    	return list;
+    }
+    public Map<String,Object>  getParameter4Json (List<ParameterModel> pmes){
+    	 
+    	Map<String,Object> map = new HashMap<>();
+    	for (ParameterModel pm : pmes) {
+    		map.put(pm.getParameterCode(), pm.getParameterExample());
     	}
     	return map;
     }
@@ -126,8 +141,8 @@ public class ApiDocAop {
     public Map<String,Object> getArray4Json (List<ArrayModel> arrayModels){
     	Map<String,Object> map = new LinkedHashMap<>();
     	for (ArrayModel arrays : arrayModels) {
-    		Map<String,Object> paraMap = getParameter4Json(arrays.getParameterModels());
-    		map.put(arrays.getKey(), paraMap) ;
+    		List<Map<String,Object>> list = getParameter4ArrayJson(arrays.getParameterModels());
+    		map.put(arrays.getKey(), list) ;
     	}
     	return map;
     }

@@ -28,6 +28,7 @@ public class InterfacModel {
 
 	private List<ParameterModel> parameterModels;
 	private List<ArrayModel> arrayModels;
+	private List<ParameterModel> parameterReturModels;
 
 	public String getInterfacId() {
 		return interfacId;
@@ -116,5 +117,15 @@ public class InterfacModel {
 	public void setArrayModels(List<ArrayModel> arrayModels) {
 		this.arrayModels = arrayModels;
 	}
+
+	public List<ParameterModel> getParameterReturModels() {
+		return parameterReturModels;
+	}
+
+	public void setParameterReturModels(List<ParameterModel> parameterReturModels) {
+		this.parameterReturModels = parameterReturModels;
+	}
+
+	 
 
 }

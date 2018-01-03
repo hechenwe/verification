@@ -3,7 +3,6 @@ package com.sooncode.verification_apidoc.service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -26,6 +25,7 @@ import com.sooncode.verification_apidoc.model.InterfacModel;
 import com.sooncode.verification_apidoc.model.ModuleModel;
 import com.sooncode.verification_apidoc.model.ParameterConstraintModel;
 import com.sooncode.verification_apidoc.model.ParameterModel;
+ 
 
 public class ModuleModelService {
 
@@ -33,6 +33,7 @@ public class ModuleModelService {
 	private static final String CHINESE_ANNOTATION = "chineseAnnotation";
 	private static final String METHOD = "method";
 	private static final String PARAMETER = "parameter";
+	private static final String PARAMETER_RETURN = "parameter-return";
 	private static final String ARRAY = "array";
 	private static final String REF = "ref";
 	private static final String MUST = "must";
@@ -42,6 +43,7 @@ public class ModuleModelService {
 	private static final String MIN_LENGTH = "minLength";
 	private static final String URL = "url";
 	private static final String EXAMPLE = "example";
+	private static final String ENUMERATION = "enumeration";
 
 	private Map<String, ParameterModel> publicParameterModels = new HashMap<>();
 	private DomService domService;
@@ -98,8 +100,10 @@ public class ModuleModelService {
 			im.setUrl(url);
 			List<ParameterModel> parameterModels = this.getParameterModels4Interfac(interfacNode);
             List<ArrayModel> arrayModels = this.getArrayModels(interfacNode);
+            List<ParameterModel> parameterReturModels = this.getParameterReturnModels4Interfac(interfacNode);
 			im.setParameterModels(parameterModels);
 			im.setArrayModels(arrayModels);
+			im.setParameterReturModels(parameterReturModels);
 			list.add(im);
 		}
 
@@ -142,6 +146,7 @@ public class ModuleModelService {
 				String example = domService.getAttribute(parameterNode, EXAMPLE);
 				String maxLength = domService.getAttribute(parameterNode, MAX_LENGTH);
 				String minLength = domService.getAttribute(parameterNode, MIN_LENGTH);
+				String enumeration = domService.getAttribute(parameterNode, ENUMERATION);
 				minLength = (minLength == null) ? "1" : minLength;
 				pm.setIsMust(must);
 				pm.setParameterName(chineseAnnotation);
@@ -150,6 +155,7 @@ public class ModuleModelService {
 				pm.setMaxLength(Integer.parseInt(maxLength));
 				pm.setMinLength(Integer.parseInt(minLength));
 				pm.setParameterExample(example);
+				pm.setEnumeration(enumeration);
 				List<ParameterConstraintModel> parameterConstraintModels = this.getParameterConstraintModels(parameterNode);
 				pm.setParameterConstraintModels(parameterConstraintModels);
 				list.add(pm);
@@ -159,6 +165,57 @@ public class ModuleModelService {
 
 		return list;
 
+	}
+	/**
+	 * 获取 参数
+	 * 
+	 * @param interfacNode
+	 * @return
+	 */
+	private List<ParameterModel> getParameterReturnModels4Interfac(Node interfacNode) {
+		List<ParameterModel> list = new ArrayList<>();
+		
+		List<Node> parameterNodes = domService.getChildNodes(interfacNode, PARAMETER_RETURN);
+		for (Node parameterNode : parameterNodes) {
+			String ref = domService.getAttribute(parameterNode, REF);
+			String must = domService.getAttribute(parameterNode, MUST);
+			must = (must == null) ? "true" : "false";
+			ParameterModel pm = new ParameterModel();
+			
+			if (ref != null) {
+				
+				pm = publicParameterModels.get(ref);
+				if (pm != null) {
+					pm.setIsMust(must);
+					list.add(pm);
+				}
+			} else {
+				
+				String chineseAnnotation = domService.getAttribute(parameterNode, CHINESE_ANNOTATION);
+				String key = domService.getAttribute(parameterNode, KEY);
+				String type = domService.getAttribute(parameterNode, TYPE);
+				String example = domService.getAttribute(parameterNode, EXAMPLE);
+				String maxLength = domService.getAttribute(parameterNode, MAX_LENGTH);
+				String minLength = domService.getAttribute(parameterNode, MIN_LENGTH);
+				String enumeration = domService.getAttribute(parameterNode, ENUMERATION);
+				minLength = (minLength == null) ? "1" : minLength;
+				pm.setIsMust(must);
+				pm.setParameterName(chineseAnnotation);
+				pm.setParameterCode(key);
+				pm.setParameterDataType(type);
+				pm.setMaxLength(Integer.parseInt(maxLength));
+				pm.setMinLength(Integer.parseInt(minLength));
+				pm.setParameterExample(example);
+				pm.setEnumeration(enumeration);
+				List<ParameterConstraintModel> parameterConstraintModels = this.getParameterConstraintModels(parameterNode);
+				pm.setParameterConstraintModels(parameterConstraintModels);
+				list.add(pm);
+			}
+			
+		}
+		
+		return list;
+		
 	}
 
 	
@@ -206,6 +263,7 @@ public class ModuleModelService {
 			must = (must == null) ? "true" : "false";
 			String maxLength = domService.getAttribute(parameterNode, MAX_LENGTH);
 			String minLength = domService.getAttribute(parameterNode, MIN_LENGTH);
+			String enumeration = domService.getAttribute(parameterNode, ENUMERATION);
 			minLength = (minLength == null) ? "1" : minLength;
 			ParameterModel pm = new ParameterModel();
 			pm.setIsMust(must);
@@ -215,6 +273,7 @@ public class ModuleModelService {
 			pm.setMaxLength(Integer.parseInt(maxLength));
 			pm.setMinLength(Integer.parseInt(minLength));
 			pm.setParameterExample(example);
+			pm.setEnumeration(enumeration);
 			List<ParameterConstraintModel> parameterConstraintModels = this.getParameterConstraintModels(parameterNode);
 			pm.setParameterConstraintModels(parameterConstraintModels);
 			map.put(key, pm);

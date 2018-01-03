@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.sooncode.verification_apidoc.model.AddInterfacModel;
 import com.sooncode.verification_apidoc.model.AddModuleModel;
-import com.sooncode.verification_apidoc.model.AddParameterModel;
 import com.sooncode.verification_apidoc.model.AddProjectModel;
 import com.sooncode.verification_apidoc.model.InterfacModel;
 import com.sooncode.verification_apidoc.model.ModuleModel;
@@ -55,24 +54,17 @@ public class HttpSaveModelService {
 		String id = (String) resultJson.getFields("interfacId");
 		return id;
 	}
-	public String saveParameter(ParameterModel parameterModel){
+	public void saveParameters(List<ParameterModel> parameterModels){
 		String urlString = url+"/parameterController/addParameter";
-		AddParameterModel  addPM = (AddParameterModel ) RObject.to(parameterModel , AddParameterModel.class);
-		SJson sj = new SJson(addPM);
-		String result = HttpRequest.postRequest(urlString, sj.getJsonString());
-		SJson resultJson = new SJson(result);
-		String id = (String) resultJson.getFields("parameterId");
-		return id;
+		JSONArray jsonA = JSONArray.fromObject(parameterModels);
+	    HttpRequest.postRequest(urlString, jsonA.toString());
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-	public void saveParameters(List<ParameterModel> parameterModels){
-		String urlString = url+"/parameterController/addParameter";
-		List<AddParameterModel>  addPMs =  (List<AddParameterModel>) RObject.tos(parameterModels , AddParameterModel.class);
-		 
-		JSONArray array = JSONArray.fromObject(addPMs);
-		HttpRequest.postRequest(urlString, array.toString());
+	public void saveParameterReturn(List<ParameterModel> parameterModels){
+		String urlString = url+"/parameterReturnController/addParameterReturns";
+		JSONArray jsonA = JSONArray.fromObject(parameterModels);
+	    HttpRequest.postRequest(urlString, jsonA.toString());
 		 
 	}
 	

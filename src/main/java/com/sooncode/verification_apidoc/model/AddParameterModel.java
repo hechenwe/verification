@@ -37,6 +37,9 @@ public class AddParameterModel  {
 	 /** 参数实例 */
 	 private String parameterExample ;
 
+	 /** 枚举值 */
+	 private String enumeration ;
+	 
 	public String getParameterId() {
 		return parameterId;
 	}
@@ -107,6 +110,14 @@ public class AddParameterModel  {
 
 	public void setParameterExample(String parameterExample) {
 		this.parameterExample = parameterExample;
+	}
+
+	public String getEnumeration() {
+		return enumeration;
+	}
+
+	public void setEnumeration(String enumeration) {
+		this.enumeration = enumeration;
 	}
 	
 

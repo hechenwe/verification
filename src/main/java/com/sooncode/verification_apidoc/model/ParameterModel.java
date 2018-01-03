@@ -27,7 +27,9 @@ public class ParameterModel {
 	/** 参数数据类型 */
 	private String interfacId;
 	
+	 /** 枚举值 */
 	 
+	private String enumeration ;
 
 	private List<ParameterConstraintModel> parameterConstraintModels;
 
@@ -101,6 +103,14 @@ public class ParameterModel {
 
 	public void setInterfacId(String interfacId) {
 		this.interfacId = interfacId;
+	}
+
+	public String getEnumeration() {
+		return enumeration;
+	}
+
+	public void setEnumeration(String enumeration) {
+		this.enumeration = enumeration;
 	}
 
 	
