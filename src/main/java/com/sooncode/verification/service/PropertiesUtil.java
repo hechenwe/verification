@@ -1,6 +1,6 @@
 package com.sooncode.verification.service;
 
-
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,29 +31,41 @@ class PropertiesUtil {
 		this.filePath = filePath;
 		properties = new Properties();
 		InputStreamReader in;
-		FileInputStream fileInputStream ;
+		FileInputStream fileInputStream;
 		try {
 			fileInputStream = new FileInputStream(this.filePath);
-			
+
 			in = new InputStreamReader(fileInputStream, "utf-8");
 			properties.load(in);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	public PropertiesUtil(File file) {
-		 
+
 		properties = new Properties();
 		InputStreamReader in;
-		FileInputStream fileInputStream ;
+		FileInputStream fileInputStream;
 		try {
 			fileInputStream = new FileInputStream(this.filePath);
-			
+
 			in = new InputStreamReader(fileInputStream, "utf-8");
 			properties.load(in);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public PropertiesUtil(BufferedReader br) {
+
+		properties = new Properties();
+		try {
+			properties.load(br);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**

@@ -62,6 +62,23 @@ public class MethodParameter {
 		this.initMethodMap();
 
 	}
+	
+	
+	public MethodParameter(BufferedReader br) {
+		
+		String str = readFile(br);
+		InputSource inputSource = new InputSource(new StringReader(str));
+		try {
+			Document  document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
+			this.domService = new DomService(document);
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			
+			e.printStackTrace();
+		}
+		
+		this.initMethodMap();
+		
+	}
 
 	private void initMethodMap() {
 
@@ -219,6 +236,22 @@ public class MethodParameter {
 		StringBuffer sb = new StringBuffer();
 		try {
 			br = new BufferedReader(new FileReader(file));
+			String temp = null;
+			temp = br.readLine();
+			while (temp != null) {
+				sb.append(temp + " ");
+				temp = br.readLine();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+	
+	
+	private static String readFile(BufferedReader br) {
+		StringBuffer sb = new StringBuffer();
+		try {
 			String temp = null;
 			temp = br.readLine();
 			while (temp != null) {
