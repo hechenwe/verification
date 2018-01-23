@@ -24,7 +24,7 @@ public class Method {
 	/** 接口的参数 */
 	private List<Parameter> parameters;
 
-	 
+	private List<JsonObject> jsonObjects;
 
 	public String getUrl() {
 		return url;
@@ -58,6 +58,16 @@ public class Method {
 
 	public void setParameters(List<Parameter> parameters) {
 		this.parameters = parameters;
+	}
+
+	
+	
+	public List<JsonObject> getJsonObjects() {
+		return jsonObjects;
+	}
+
+	public void setJsonObjects(List<JsonObject> jsonObjects) {
+		this.jsonObjects = jsonObjects;
 	}
 
 	@Override

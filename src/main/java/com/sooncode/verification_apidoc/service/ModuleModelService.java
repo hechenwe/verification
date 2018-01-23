@@ -23,6 +23,7 @@ import org.xml.sax.SAXException;
 import com.sooncode.verification_apidoc.model.ArrayModel;
 import com.sooncode.verification_apidoc.model.InterfacModel;
 import com.sooncode.verification_apidoc.model.ModuleModel;
+import com.sooncode.verification_apidoc.model.ObjectModel;
 import com.sooncode.verification_apidoc.model.ParameterConstraintModel;
 import com.sooncode.verification_apidoc.model.ParameterModel;
  
@@ -34,6 +35,7 @@ public class ModuleModelService {
 	private static final String METHOD = "method";
 	private static final String PARAMETER = "parameter";
 	private static final String PARAMETER_RETURN = "parameter-return";
+	private static final String OBJECT = "object";
 	private static final String ARRAY = "array";
 	private static final String REF = "ref";
 	private static final String MUST = "must";
@@ -62,7 +64,7 @@ public class ModuleModelService {
 	}
 
 	/**
-	 * 获取模块
+	 * 获取模块 Controller 
 	 * 
 	 * @return
 	 */
@@ -100,10 +102,12 @@ public class ModuleModelService {
 			im.setUrl(url);
 			List<ParameterModel> parameterModels = this.getParameterModels4Interfac(interfacNode);
             List<ArrayModel> arrayModels = this.getArrayModels(interfacNode);
+            List<ObjectModel> objectModels = this.getObjectModels(interfacNode);
             List<ParameterModel> parameterReturModels = this.getParameterReturnModels4Interfac(interfacNode);
 			im.setParameterModels(parameterModels);
 			im.setArrayModels(arrayModels);
 			im.setParameterReturModels(parameterReturModels);
+			im.setObjectModels(objectModels);
 			list.add(im);
 		}
 
@@ -230,17 +234,48 @@ public class ModuleModelService {
 		for (Node array : arrays) {
 			String chineseAnnotation = domService.getAttribute(array, CHINESE_ANNOTATION);
 			String key = domService.getAttribute(array, KEY);
-			
+			String must = domService.getAttribute(array, MUST);
+			must = (must == null) ? "true" : "false";
 			List<ParameterModel> parameterModels =  getParameterModels4Interfac(array);
 			ArrayModel arrayModel = new ArrayModel();
 			arrayModel.setChineseAnnotation(chineseAnnotation);
 			arrayModel.setKey(key);
+			arrayModel.setIsMust(must);
 			arrayModel.setParameterModels(parameterModels);
 			arrayModels.add(arrayModel);
 		}
 		
 		
 		return arrayModels;
+	}
+	
+	
+	private List<ObjectModel> getObjectModels (Node interfacNode){
+		List<ObjectModel> objectModels = new LinkedList<ObjectModel>();
+		List<Node> arrays = domService.getChildNodes(interfacNode, OBJECT);
+		
+		if(arrays.size() == 0){
+			return objectModels;
+		}
+		
+		for (Node array : arrays) {
+			String chineseAnnotation = domService.getAttribute(array, CHINESE_ANNOTATION);
+			String key = domService.getAttribute(array, KEY);
+			String must = domService.getAttribute(array, MUST);
+			must = (must == null) ? "true" : "false";
+			List<ParameterModel> parameterModels =  getParameterModels4Interfac(array);
+			List<ArrayModel> arrayModels = getArrayModels(array);
+			ObjectModel objectModel = new ObjectModel();
+			objectModel.setChineseAnnotation(chineseAnnotation);
+			objectModel.setKey(key);
+			objectModel.setIsMust(must);
+			objectModel.setParameterModels(parameterModels);
+			objectModel.setArrayModels(arrayModels);
+			objectModels.add(objectModel);
+		}
+		
+		
+		return objectModels;
 	}
 	
 	

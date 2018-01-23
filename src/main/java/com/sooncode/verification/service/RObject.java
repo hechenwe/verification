@@ -153,7 +153,7 @@ public class RObject {
 				Method method = pd.getWriteMethod();
 				method.invoke(this.object, args);
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}

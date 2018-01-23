@@ -23,6 +23,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.sooncode.verification.moduler.Array;
+import com.sooncode.verification.moduler.JsonObject;
 import com.sooncode.verification.moduler.Method;
 import com.sooncode.verification.moduler.Parameter;
 import com.sooncode.verification_apidoc.service.DomService;
@@ -36,13 +37,14 @@ import com.sooncode.verification_apidoc.service.DomService;
 public class MethodParameter {
 
 	private static final String CONTROLLER = "controller";
-	//private static final String CHINESE_ANNOTATION = "chineseAnnotation";
+	// private static final String CHINESE_ANNOTATION = "chineseAnnotation";
 	private static final String METHOD = "method";
 	private static final String PARAMETER = "parameter";
 	private static final String ARRAY = "array";
+	private static final String OBJECT = "object";
 	private static final String REF = "ref";
 	private static final String MUST = "must";
-    public final static Log logger = LogFactory.getLog(MethodParameter.class); 
+	public final static Log logger = LogFactory.getLog(MethodParameter.class);
 	// private String path = PathUtil.getClassPath() ;
 	private DomService domService;
 	public Map<String, Parameter> paraMap = new HashMap<>();
@@ -52,7 +54,7 @@ public class MethodParameter {
 		String str = readFile(file);
 		InputSource inputSource = new InputSource(new StringReader(str));
 		try {
-			Document  document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
+			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
 			this.domService = new DomService(document);
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 
@@ -62,27 +64,25 @@ public class MethodParameter {
 		this.initMethodMap();
 
 	}
-	
-	
+
 	public MethodParameter(BufferedReader br) {
-		
+
 		String str = readFile(br);
 		InputSource inputSource = new InputSource(new StringReader(str));
 		try {
-			Document  document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
+			Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
 			this.domService = new DomService(document);
 		} catch (SAXException | IOException | ParserConfigurationException e) {
-			
+
 			e.printStackTrace();
 		}
-		
+
 		this.initMethodMap();
-		
+
 	}
 
 	private void initMethodMap() {
 
-		 
 		Node node = domService.getNode4Document(CONTROLLER);
 
 		List<Node> parameterlist = domService.getChildNodes(node, PARAMETER);
@@ -97,7 +97,7 @@ public class MethodParameter {
 		for (Node n : methodlist) {
 			Method c = getMethod(n);
 			MethodParameterManager.controllerMap.put(c.getUrl(), c);
-			logger.debug("[parameter_verification]"+c.getUrl());
+			logger.debug("[parameter_verification]" + c.getUrl());
 		}
 
 	}
@@ -115,6 +115,7 @@ public class MethodParameter {
 		NodeList nodeList = node.getChildNodes();
 		List<Parameter> parameters = new ArrayList<>();
 		List<Array> arrays = new ArrayList<>();
+		List<JsonObject> jsonObjects = new ArrayList<>();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node n = nodeList.item(i);
 			String nodeName = n.getNodeName();
@@ -126,21 +127,23 @@ public class MethodParameter {
 				newPar.setMaxLength(p.getMaxLength());
 				newPar.setType(p.getType());
 
-				if (getParameterMust(n)) {
-					newPar.setMust(true);
+				newPar.setMust(getParameterMust(n));
 
-				} else {
-					newPar.setMust(false);
-				}
 				parameters.add(newPar);
 			} else if (nodeName.equals(ARRAY)) {
 				Array a = getArray(n);
+				a.setMust(getParameterMust(n));
 				arrays.add(a);
+			} else if (nodeName.equals(OBJECT)) {
+				JsonObject jo = getJsonObject(n);
+				jo.setMust(getParameterMust(n));
+				jsonObjects.add(jo);
 			}
 
 		}
 		c.setParameters(parameters);
 		c.setArrays(arrays);
+		c.setJsonObjects(jsonObjects);
 		return c;
 	}
 
@@ -166,6 +169,37 @@ public class MethodParameter {
 				parameters.add(p);
 			}
 		}
+		a.setParameters(parameters);
+		a.setMust(getParameterMust(node));
+		return a;
+	}
+
+	private JsonObject getJsonObject(Node node) {
+		NamedNodeMap nnm = node.getAttributes();
+		RObject rObj = new RObject(JsonObject.class);
+		for (int i = 0; i < nnm.getLength(); i++) {
+			Node n = nnm.item(i);
+			String name = n.getNodeName();
+			String value = n.getNodeValue();
+			rObj.invokeSetMethod(name, value);
+		}
+
+		JsonObject a = rObj.getObject();
+
+		NodeList nodeList = node.getChildNodes();
+		List<Parameter> parameters = new ArrayList<>();
+		List<Array> arrays = new ArrayList<>();
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node n = nodeList.item(i);
+			if (n.getNodeName().equals(PARAMETER)) {
+				Parameter p = getParameter(n);
+				parameters.add(p);
+			} else if (n.getNodeName().equals(ARRAY)) {
+				arrays.add(getArray(n));
+			}
+		}
+
+		a.setArrays(arrays);
 		a.setParameters(parameters);
 		return a;
 	}
@@ -247,8 +281,7 @@ public class MethodParameter {
 		}
 		return sb.toString();
 	}
-	
-	
+
 	private static String readFile(BufferedReader br) {
 		StringBuffer sb = new StringBuffer();
 		try {

@@ -10,6 +10,7 @@ import com.sooncode.verification.moduler.VerificationResult;
 import com.sooncode.verification.service.intercepter.VerificationElement;
 import com.sooncode.verification.service.intercepter.method.ArrayVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.method.JsonFormatVerificationIntercepter;
+import com.sooncode.verification.service.intercepter.method.ObjectVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.method.ParameterVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.method.RequestMethodVerificationIntercepter;
 import com.sooncode.verification.service.intercepter.method.VerificationIntercepterChain;
@@ -27,7 +28,8 @@ public class VerificationService {
 		vic.add(RequestMethodVerificationIntercepter.class)
 		   .add(JsonFormatVerificationIntercepter.class)
 		   .add(ParameterVerificationIntercepter.class)
-		   .add(ArrayVerificationIntercepter.class);
+		   .add(ArrayVerificationIntercepter.class)
+		   .add(ObjectVerificationIntercepter.class);
 		 
 		return vic.doIntercepter(ve);
 

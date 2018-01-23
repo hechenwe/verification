@@ -52,13 +52,26 @@ public class ArrayVerificationIntercepter implements VerificationIntercepter {
 	private Object getObject2JsonArray(JSONArray jsonArray, String key) {
 		Object value = null;
 		for (int i = 0; i < jsonArray.size(); i++) {
-			JSONObject obj = (JSONObject) jsonArray.get(i);
-			value = obj.get(key);
-			if (value != null) {
-				break;
+			Object object = jsonArray.get(i);
+			if(isJsonObject(object)) {
+				JSONObject obj = (JSONObject) object;
+				value = obj.get(key);
+				if (value != null) {
+					break;
+				}
+				
 			}
 		}
 		return value;
+	}
+	
+	private boolean isJsonObject(Object jsonData) {
+		try {
+			JSONObject.fromObject(jsonData.toString());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

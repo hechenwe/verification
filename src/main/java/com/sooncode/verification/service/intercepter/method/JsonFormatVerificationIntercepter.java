@@ -1,8 +1,10 @@
 package com.sooncode.verification.service.intercepter.method;
 
-import com.alibaba.fastjson.JSONObject;
+ 
 import com.sooncode.verification.moduler.VerificationResult;
 import com.sooncode.verification.service.intercepter.VerificationElement;
+
+import net.sf.json.JSONObject;
 
 public class JsonFormatVerificationIntercepter implements VerificationIntercepter {
 
@@ -26,7 +28,7 @@ public class JsonFormatVerificationIntercepter implements VerificationIntercepte
 
 	private boolean parseObject4Json(String jsonDataString) {
 		try {
-			JSONObject.parseObject(jsonDataString);
+			JSONObject.fromObject(jsonDataString);
 			return true;
 		} catch (Exception e) {
 			return false;

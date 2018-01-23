@@ -3,18 +3,20 @@ package com.sooncode.verification.moduler;
 import java.util.List;
 
 /**
- * JSON格式 数组 模型
+ * JSON格式 Object 模型
  * 
- * @author pc
+ * @author hechenwe@gmail.com
  *
  */
-public class Array  {
+public class JsonObject  {
 	/** 数组 KEY */
 	private String key;
 
 	private List<Parameter> parameters;
+	
+	private List<Array> arrays;
   
-	private Boolean must;
+	private Boolean must; 
 
 
 	public String getKey() {
@@ -35,9 +37,20 @@ public class Array  {
 	public void setParameters(List<Parameter> parameters) {
 		this.parameters = parameters;
 	}
+	
+	
+
+	public List<Array> getArrays() {
+		return arrays;
+	}
+
+
+	public void setArrays(List<Array> arrays) {
+		this.arrays = arrays;
+	}
 
 	
-	
+
 	public Boolean getMust() {
 		return must;
 	}

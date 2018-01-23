@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controller chineseAnnotation="交易监控数据收集">
+
+	<parameter key="parameterVerificationCode" chineseAnnotation="参数验证结果代码" type="STRING" maxLength="32" example="SUCCESS"></parameter>
+	<parameter key="parameterVerificationMessage" chineseAnnotation="参数验证结果信息" type="STRING" maxLength="32" example="验证成功"></parameter>
+
+
+	<parameter chineseAnnotation="业务系统代码" key="businessSystemCode" type="STRING" maxLength="32" example="NEW"></parameter>
+	<parameter chineseAnnotation="规则编号" key="ruleId" type="STRING" maxLength="32" example="0001"></parameter>
+	<parameter chineseAnnotation="规则类型代码" key="ruleTypeCode" type="STRING" maxLength="32" example="CODE"></parameter>
+
+	<parameter chineseAnnotation="规则名称" key="ruleLibraryName" type="STRING" maxLength="64" example="响应码规则"></parameter>
+	<parameter chineseAnnotation="邮件组编号" key="emailGroup" type="STRING" maxLength="64" example="001"></parameter>
+	<parameter chineseAnnotation="短信组编号" key="smsGroup" type="STRING" maxLength="64" example="001"></parameter>
+	<parameter chineseAnnotation="处理方案" key="remark" type="STRING" maxLength="128" example="联系商家"></parameter>
+
+	<parameter chineseAnnotation="警报标题" key="alarmTitle" type="STRING" maxLength="256" example="整合监控-通道超时预警邮件"></parameter>
+	<parameter chineseAnnotation="警报内容" key="alarmContent" type="STRING" maxLength="256" example="整合监控-通道超时预警邮件"></parameter>
+	<parameter chineseAnnotation="警报原文html" key="emailHtml" type="STRING" maxLength="1000000000" example="整合监控-通道超时预警邮件"></parameter>
+	<parameter chineseAnnotation="警报级别" key="alarmLevel" type="STRING" maxLength="32" example="1"></parameter>
+
+
+
+	<method chineseAnnotation="添加警报" url="vacation/alarmController/addAlarm" method="POST">
+
+		<parameter ref="businessSystemCode"></parameter>
+		<parameter ref="ruleId"></parameter>
+		<parameter ref="ruleTypeCode"></parameter>
+
+		<parameter ref="alarmTitle"></parameter>
+		<parameter ref="alarmLevel"></parameter>
+
+		<array chineseAnnotation="警报因素" key="alarmElements" must="false">
+			<parameter key="payType" chineseAnnotation="支付类型" type="STRING" maxLength="64" example="代扣"></parameter>
+			<parameter key="orderNo" chineseAnnotation="全局订单号 " type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="internalSystemTag" chineseAnnotation="内部系统标识" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="systemId" chineseAnnotation="系统标识" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="bankChannel" chineseAnnotation="签约主体号" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="statusMsg" chineseAnnotation="状态描述" type="STRING" maxLength="256" example="描述"></parameter>
+			<parameter key="splitBatchNo" chineseAnnotation="拆分后的小批次号" type="STRING" maxLength="64" example="0001"></parameter>
+			<parameter key="dbtrBankId" chineseAnnotation="付款方银行编号" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="amount" chineseAnnotation="总金额 " type="STRING" maxLength="64" example="100"></parameter>
+			<parameter key="respMsg" chineseAnnotation="响应码信息 " type="STRING" maxLength="64" example="200"></parameter>
+			<parameter key="interBankFlag" chineseAnnotation="跨行标识" type="STRING" maxLength="64" example="0"></parameter>
+			<parameter key="outOrderNo" chineseAnnotation="外部业务订单号" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="outBatchNo" chineseAnnotation="外部业务批次号" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="timeCode" chineseAnnotation="埋点时间节点" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="batchFlag" chineseAnnotation="批次标记" type="STRING" maxLength="64" example="0"></parameter>
+			<parameter key="splitBatchCount" chineseAnnotation="拆分后的小批次的订单条数" type="STRING" maxLength="64" example="5"></parameter>
+			<parameter key="respCode" chineseAnnotation="响应码 " type="STRING" maxLength="64" example="200"></parameter>
+			<parameter key="orderNoList" chineseAnnotation="子订单号集合" type="STRING" maxLength="64" example="001;002"></parameter>
+			<parameter key="dbtrBankName" chineseAnnotation="付款方银行名称" type="STRING" maxLength="64" example="工商银行"></parameter>
+			<parameter key="systemTag" chineseAnnotation="外部系统标识" type="STRING" maxLength="64" example="oa"></parameter>
+			<parameter key="ip" chineseAnnotation="IP地址" type="STRING" maxLength="64" example="127.78.9.8"></parameter>
+			<parameter key="batchTotalCount" chineseAnnotation="批次中订单总条数" type="STRING" maxLength="64" example="4"></parameter>
+			<parameter key="batchNo" chineseAnnotation="全局批次号" type="STRING" maxLength="64" example="001"></parameter>
+			<parameter key="statusCode" chineseAnnotation="交易状态" type="STRING" maxLength="64" example="1"></parameter>
+			<parameter key="settleType" chineseAnnotation="结算方式" type="STRING" maxLength="64" example="N"></parameter>
+			<parameter key="errorDescribe" chineseAnnotation="错误描述" type="STRING" maxLength="64" example="error"></parameter>
+			<parameter key="dbtrName" chineseAnnotation="付款方客户名称" type="STRING" maxLength="64" example="宜信"></parameter>
+
+		</array>
+
+		<object key="monitorRule" chineseAnnotation="监控规则" must="false" >
+
+			<parameter ref="ruleLibraryName"></parameter>
+			<parameter ref="emailGroup"></parameter>
+			<parameter ref="smsGroup"></parameter>
+			<parameter ref="alarmContent"></parameter>
+			<parameter ref="emailHtml"></parameter>
+			<parameter ref="remark"></parameter>
+
+			<array chineseAnnotation="规则描述" key="ruleDescriptionModels" must="false">
+				<parameter key="ruleDescriptionCode" chineseAnnotation="规则描述代码" type="STRING" maxLength="32" example="MONITOR_TYPE"></parameter>
+				<parameter key="ruleDescriptionName" chineseAnnotation="规则描述名称 " type="STRING" maxLength="32" example="监控类型"></parameter>
+				<parameter key="ruleDescriptionContent" chineseAnnotation="规则描述内容" type="STRING" maxLength="32" example="01"></parameter>
+				<parameter key="ruleDescription" chineseAnnotation="规则描述序号" type="INTEGER" maxLength="11" example="1"></parameter>
+			</array>
+
+
+		</object>
+ 
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return key="save" chineseAnnotation="保存" type="STRING" maxLength="32" example="SAVE_SUCCESS"></parameter-return>
+
+
+
+
+	</method>
+
+
+
+</controller>
+
+<!-- { "alarmLevel":"1", "alarmTitle":"新结算监控-通道网络异常预警邮件-异常代码501", "alarmContent":"fdfdfd", "emailHtml":"<html></html>", "ruleId":"0001", "ruleTypeCode":"NETWORK_EXCEPTION", "businessSystemCode":"NEW_SETTLEMENT", "alarmElements":[ { "splitBatchNo":"0001", "splitBatchCount":"5", "dbtrBankId":"001", "bankChannel":"001", "dbtrName":"宜信", "payType":"代扣", "systemId":"001", "amount":"100", "batchNo":"001", "orderNo":"001", "batchFlag":"0", "systemTag":"oa", "ip":"127.78.9.8", "outOrderNo":"001", "interBankFlag":"0", "errorDescribe":"error", "statusMsg":"描述", "outBatchNo":"001", "internalSystemTag":"001", "respMsg":"200", "batchTotalCount":"4", "dbtrBankName":"工商银行", "timeCode":"001", "orderNoList":"001;002", "respCode":"200", 
+	"settleType":"N", "statusCode":"1" } ], "monitorRule":{ "remark":"联系商家", "ruleLibraryName":"响应码规则", "emailGroup":"001", "smsGroup":"001", "ruleDescriptionModels":[ { "ruleDescriptionContent":"01", "ruleDescriptionCode":"MONITOR_TYPE", "ruleDescription":"1", "ruleDescriptionName":"监控类型" } ] } } -->
+
+
+ 

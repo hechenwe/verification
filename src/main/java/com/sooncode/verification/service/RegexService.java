@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.sooncode.verification.filter.ParameterVerificationFilter;
+import com.sooncode.verification.filter.VerificationConfigLoad;
 
 /**
  * 正则验证 服务
@@ -19,7 +19,7 @@ public class RegexService {
 			return true;
 		}
 
-		List<BufferedReader> list = ParameterVerificationFilter.getBufferedReaders(ParameterVerificationFilter.regexConfLocation);
+		List<BufferedReader> list = VerificationConfigLoad.getBufferedReaders(VerificationConfigLoad.regexConfLocation);
 		PropertiesUtil pu = new PropertiesUtil(list.get(0));
 		String regex = pu.getString(type);
 		Pattern pattern = Pattern.compile(regex);
