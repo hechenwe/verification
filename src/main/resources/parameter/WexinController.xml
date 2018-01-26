@@ -4,18 +4,18 @@
 	<parameter chineseAnnotation="公开编号" key="openId" type="INTEGER" maxLength="11" example="1"></parameter>
 	<parameter chineseAnnotation="密码" key="password" type="STRING" maxLength="64" example="SFSLDKJFLKDF"></parameter>
 
-	<method chineseAnnotation="微信支付统一下单" url="weixin/getInfo" method="POST">
+	<method  number = "101001001" chineseAnnotation="微信支付统一下单" url="weixin/getInfo" method="POST">
 		<parameter chineseAnnotation="手机号码" key="mobile" type="STRING" maxLength="11" example="13681004142"></parameter>
 		<parameter ref="openId" must="false"></parameter>
 		<parameter ref="password"></parameter>
 		<array chineseAnnotation="类型" key="types">
-			<parameter key="type1" type="STRING" maxLength="32" enumeration="AAA;BBB" example="AAA"></parameter>
-			<parameter key="type2" type="STRING" maxLength="32" enumeration="CCC;DDD" example="CCC"></parameter>
+			<parameter key="type1" type="STRING" maxLength="32" enumeration="AAA;BBB" enumeration-explain="你们;我们" example="AAA"></parameter>
+			<parameter key="type2" type="STRING" maxLength="32" enumeration="CCC;DDD" enumeration-explain="小学;中学" example="CCC"></parameter>
 		</array>
 	</method>
 
 
-	<method chineseAnnotation="微信支付统一下单2" url="weixin/getInfo2" method="POST">
+	<method number = "101001002" chineseAnnotation="微信支付统一下单2" url="weixin/getInfo2" method="POST">
 
 		<parameter ref="openId" must="false"></parameter>
 		<parameter ref="password"></parameter>

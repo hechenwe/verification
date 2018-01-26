@@ -27,6 +27,20 @@ public class AddInterfacModel {
 	 
 	 /** 模块_编号 */
 	 private String moduleId ;
+	 
+	 private String interfacNumber;
+	 
+	 
+
+
+	public String getInterfacNumber() {
+		return interfacNumber;
+	}
+
+
+	public void setInterfacNumber(String interfacNumber) {
+		this.interfacNumber = interfacNumber;
+	}
 
 
 	public String getInterfacId() {

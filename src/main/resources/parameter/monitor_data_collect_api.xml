@@ -23,8 +23,8 @@
 
 	<method chineseAnnotation="添加警报" url="vacation/alarmController/addAlarm" method="POST">
 
-		<parameter ref="businessSystemCode"></parameter>
-		<parameter ref="ruleId"></parameter>
+		<parameter ref="businessSystemCode" must="true" ></parameter>
+		<parameter ref="ruleId" must="false"></parameter>
 		<parameter ref="ruleTypeCode"></parameter>
 
 		<parameter ref="alarmTitle"></parameter>

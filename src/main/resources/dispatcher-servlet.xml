@@ -26,7 +26,7 @@
 		<property name="urlPrefix" value="http://127.0.0.1:7081/" />
 		<property name="companyId" value="2582B1DAF550485980F519096F3ACEC1" />
 		<property name="confLocation" value="classpath:parameter" />
-		<property name="apiDocServiceUrl" value="http://127.0.0.1:8080/api-doc" />
+		<property name="apiDocServiceUrl" value="http://www.sooncode.com:9003" />
 	</bean>
 
 

@@ -30,6 +30,8 @@ public class ParameterModel {
 	 /** 枚举值 */
 	 
 	private String enumeration ;
+	
+	private String enumerationExplain;
 
 	private List<ParameterConstraintModel> parameterConstraintModels;
 
@@ -111,6 +113,14 @@ public class ParameterModel {
 
 	public void setEnumeration(String enumeration) {
 		this.enumeration = enumeration;
+	}
+
+	public String getEnumerationExplain() {
+		return enumerationExplain;
+	}
+
+	public void setEnumerationExplain(String enumerationExplain) {
+		this.enumerationExplain = enumerationExplain;
 	}
 
 	

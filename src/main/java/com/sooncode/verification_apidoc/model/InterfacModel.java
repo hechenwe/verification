@@ -25,6 +25,8 @@ public class InterfacModel {
 	private String requestType;
 
 	private String moduleId;
+	
+	private String interfacNumber;
 
 	private List<ParameterModel> parameterModels;
 	private List<ArrayModel> arrayModels;
@@ -133,6 +135,14 @@ public class InterfacModel {
 
 	public void setObjectModels(List<ObjectModel> objectModels) {
 		this.objectModels = objectModels;
+	}
+
+	public String getInterfacNumber() {
+		return interfacNumber;
+	}
+
+	public void setInterfacNumber(String interfacNumber) {
+		this.interfacNumber = interfacNumber;
 	}
 
 	 

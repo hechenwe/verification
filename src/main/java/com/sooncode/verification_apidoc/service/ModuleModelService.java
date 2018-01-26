@@ -33,6 +33,7 @@ public class ModuleModelService {
 	private static final String CONTROLLER = "controller";
 	private static final String CHINESE_ANNOTATION = "chineseAnnotation";
 	private static final String METHOD = "method";
+	private static final String NUMBER = "number";
 	private static final String PARAMETER = "parameter";
 	private static final String PARAMETER_RETURN = "parameter-return";
 	private static final String OBJECT = "object";
@@ -46,6 +47,7 @@ public class ModuleModelService {
 	private static final String URL = "url";
 	private static final String EXAMPLE = "example";
 	private static final String ENUMERATION = "enumeration";
+	private static final String ENUMERATION_EXPLAIN = "enumeration-explain";
 
 	private Map<String, ParameterModel> publicParameterModels = new HashMap<>();
 	private DomService domService;
@@ -94,11 +96,13 @@ public class ModuleModelService {
 			String chineseAnnotation = domService.getAttribute(interfacNode, CHINESE_ANNOTATION);
 			String method = domService.getAttribute(interfacNode, METHOD);
 			String url = domService.getAttribute(interfacNode, URL);
+			String number = domService.getAttribute(interfacNode, NUMBER);
 
 			InterfacModel im = new InterfacModel();
 			im.setInterfacCode(url);
 			im.setInterfacName(chineseAnnotation);
 			im.setRequestType(method);
+			im.setInterfacNumber(number);
 			im.setUrl(url);
 			List<ParameterModel> parameterModels = this.getParameterModels4Interfac(interfacNode);
             List<ArrayModel> arrayModels = this.getArrayModels(interfacNode);
@@ -132,13 +136,16 @@ public class ModuleModelService {
 		for (Node parameterNode : parameterNodes) {
 			String ref = domService.getAttribute(parameterNode, REF);
 			String must = domService.getAttribute(parameterNode, MUST);
-			must = (must == null) ? "true" : "false";
+			must = (must == null) ? "true" : must;
 			ParameterModel pm = new ParameterModel();
 
 			if (ref != null) {
 
-				pm = publicParameterModels.get(ref);
-				if (pm != null) {
+				ParameterModel publicPm = publicParameterModels.get(ref);
+				if (publicPm != null) {
+					
+					pm = (ParameterModel) RObject.to(publicPm, ParameterModel.class);
+					
 					pm.setIsMust(must);
 					list.add(pm);
 				}
@@ -151,6 +158,7 @@ public class ModuleModelService {
 				String maxLength = domService.getAttribute(parameterNode, MAX_LENGTH);
 				String minLength = domService.getAttribute(parameterNode, MIN_LENGTH);
 				String enumeration = domService.getAttribute(parameterNode, ENUMERATION);
+				String enumerationExplain = domService.getAttribute(parameterNode, ENUMERATION_EXPLAIN);
 				minLength = (minLength == null) ? "1" : minLength;
 				pm.setIsMust(must);
 				pm.setParameterName(chineseAnnotation);
@@ -160,6 +168,7 @@ public class ModuleModelService {
 				pm.setMinLength(Integer.parseInt(minLength));
 				pm.setParameterExample(example);
 				pm.setEnumeration(enumeration);
+				pm.setEnumerationExplain(enumerationExplain);
 				List<ParameterConstraintModel> parameterConstraintModels = this.getParameterConstraintModels(parameterNode);
 				pm.setParameterConstraintModels(parameterConstraintModels);
 				list.add(pm);
