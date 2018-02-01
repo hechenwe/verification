@@ -16,6 +16,8 @@ public class ModuleModel {
 	 
 	 private String projectId;
 	 
+	 private String number ;
+	 
 	 private List<InterfacModel> interfacModels;
 	 
 	 
@@ -58,6 +60,14 @@ public class ModuleModel {
 
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	 
 	 

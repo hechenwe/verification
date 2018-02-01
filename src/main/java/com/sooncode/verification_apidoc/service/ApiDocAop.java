@@ -35,6 +35,8 @@ public class ApiDocAop {
 	private String projectName;
 	private String urlPrefix;
 	private String companyId;
+	
+	private String number ;
 
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
@@ -224,5 +226,15 @@ public class ApiDocAop {
 		return sj.getJsonString();
 
 	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
+	
 
 }

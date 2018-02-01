@@ -14,6 +14,10 @@ public class ProjectModel {
 	/** 项目名称 */
 	private String projectName;
 	private String companyId;
+	
+	private String number ;
+	
+	
 	private List<ModuleModel> moduleModels;
 	
 	
@@ -63,6 +67,14 @@ public class ProjectModel {
 
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	
 	

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<controller chineseAnnotation="微信支付">
+<controller chineseAnnotation="微信支付" number="002">
 
 	<parameter chineseAnnotation="公开编号" key="openId" type="INTEGER" maxLength="11" example="1"></parameter>
 	<parameter chineseAnnotation="密码" key="password" type="STRING" maxLength="64" example="SFSLDKJFLKDF"></parameter>

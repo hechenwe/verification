@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controller chineseAnnotation="流程" number="001">
+	<!-- 统一数据 返回字段 -->
+	<parameter key="parameterVerificationCode" chineseAnnotation="参数验证结果代码" type="STRING" maxLength="32" example="SUCCESS"></parameter>
+	<parameter key="parameterVerificationMessage" chineseAnnotation="参数验证结果信息" type="STRING" maxLength="32" example="验证成功"></parameter>
+	<parameter key="responseData" chineseAnnotation="请求响应的核心数据" type="JSON_OBJECT" maxLength="100000000" example=" -- "></parameter>
+
+	<parameter key="pageNumber" chineseAnnotation="第几页" type="INTEGER" maxLength="11" example="1"></parameter>
+	<parameter key="pageSize" chineseAnnotation="每页条数" type="INTEGER" maxLength="11" example="10"></parameter>
+
+	<parameter key="workOrderId" chineseAnnotation="工单唯一编号" type="STRING" maxLength="32" example="0D5396F81D5B4AB2B1A56326C1F07984"></parameter>
+	<parameter key="workOrderNumber" chineseAnnotation="工单号码" type="STRING" maxLength="64" example="2018011610006"></parameter>
+
+	<parameter chineseAnnotation="工单标题" key="workOrderTitle" type="STRING" maxLength="32" example="网络异常"></parameter>
+
+	<parameter chineseAnnotation="工单处理人编号" key="workOrderMainDisposerId" type="STRING" maxLength="32" example="6338B00D9FE34F478448C93486833087"></parameter>
+	<parameter chineseAnnotation="工单处理人姓名" key="workOrderMainDisposerName" type="STRING" maxLength="64" example="何臣"></parameter>
+
+
+
+	<parameter chineseAnnotation="工单协同处理人编号" key="synergiaDisposerId" type="STRING" maxLength="32" example="6338B00D9FE34F478448C93486833087"></parameter>
+	<parameter chineseAnnotation="工单协同处理人姓名" key="synergiaDisposerName" type="STRING" maxLength="64" example="何臣"></parameter>
+
+	<parameter chineseAnnotation="处理描述" key="disposeDescribe" type="STRING" maxLength="1024" example="已经处理"></parameter>
+	<parameter chineseAnnotation="工单状态代码" key="workOrderStateCode" type="STRING" maxLength="32" example="PROCESSING" enumeration="UNTREATED;PROCESSING;FINISH" enumeration-explain="待处理;处理中;已处理"></parameter>
+
+	<parameter chineseAnnotation="处理结果代码" key="disposeResultCode" type="STRING" maxLength="1024" example="WARNING_EXACT"></parameter>
+	<parameter chineseAnnotation="处理结果名称" key="disposeResultName" type="STRING" maxLength="32" example="预警准确,需要出警"></parameter>
+
+
+
+	<method chineseAnnotation="获取工单列表" url="operation-platform-system-managerment/workOrderController/getWorkOrders" method="POST" number="001">
+
+		<parameter ref="pageNumber"></parameter>
+		<parameter ref="pageSize"></parameter>
+		<parameter ref="workOrderStateCode"></parameter>
+
+		<parameter chineseAnnotation="工单标题" key="workOrderTitle" type="STRING" maxLength="32" example="网络异常" must="false"></parameter>
+		<parameter key="workOrderNumber" chineseAnnotation="工单号码" type="STRING" maxLength="64" example="2018011610006" must="false"></parameter>
+		<parameter chineseAnnotation="时间筛选时段代码" key="timeFrameCode" type="STRING" maxLength="32" example="5" must="false"></parameter>
+		<parameter chineseAnnotation="监控规则类型代码" key="ruleTypeCode" type="STRING" maxLength="32" example="NETWORK_EXCEPTION" must="false"></parameter>
+		<parameter chineseAnnotation="重要级别代码" key="importantLevelCode" type="STRING" maxLength="32" example="IMPORTANT"></parameter>
+		<parameter chineseAnnotation="业务系统代码" key="businessSystemCode" type="STRING" maxLength="32" example="NEW_SETTLEMENT"></parameter>
+
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return ref="workOrderStateCode"></parameter-return>
+		<parameter-return ref="workOrderMainDisposerId"></parameter-return>
+		<parameter-return ref="workOrderMainDisposerName"></parameter-return>
+		<parameter-return ref="disposeResultCode"></parameter-return>
+		<parameter-return ref="disposeResultName"></parameter-return>
+		<parameter-return ref="workOrderNumber"></parameter-return>
+
+	</method>
+
+
+
+	<method chineseAnnotation="批量更新工单处理状态" url="operation-platform-system-managerment/workOrderController/updateWorkOrders" method="POST">
+
+		<array chineseAnnotation="工单编号数组" key="workOrderIds">
+			<parameter ref="workOrderId"></parameter>
+		</array>
+		<parameter ref="workOrderMainDisposerId"></parameter>
+		<parameter ref="workOrderMainDisposerName"></parameter>
+
+		<parameter chineseAnnotation="处理结果代码" key="disposeResultCode" type="STRING" maxLength="1024" example="WARNING_EXACT" must="false"></parameter>
+		<parameter chineseAnnotation="处理结果名称" key="disposeResultName" type="STRING" maxLength="32" example="预警准确,需要出警" must="false"></parameter>
+
+		<parameter chineseAnnotation="工单状态代码" key="workOrderStateCode" type="STRING" maxLength="32" example="PROCESSING" enumeration="UNTREATED;PROCESSING;FINISH" enumeration-explain="待处理;处理中;已处理"></parameter>
+
+
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return key="updateWorkOrdersSize" chineseAnnotation="批量修改" type="INTEGER" maxLength="32" example="UPDATE_SUCCESS" enumeration="10"></parameter-return>
+	</method>
+
+	<method chineseAnnotation="获取工单处理的知识链接" url="operation-platform-system-managerment/workOrderController/getWorkOrders4knowledge" method="POST">
+
+		<parameter ref="pageNumber"></parameter>
+		<parameter ref="pageSize"></parameter>
+		<parameter ref="workOrderTitle"></parameter>
+
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return ref="workOrderStateCode"></parameter-return>
+		<parameter-return ref="workOrderMainDisposerId"></parameter-return>
+		<parameter-return ref="workOrderMainDisposerName"></parameter-return>
+		<parameter-return ref="disposeResultCode"></parameter-return>
+		<parameter-return ref="disposeResultName"></parameter-return>
+
+	</method>
+
+
+	<method chineseAnnotation="批量添加协助人及处理措施" url="operation-platform-system-managerment/synergiaDisposeRecordController/addSynergiaDisposeRecords" method="POST">
+		<array chineseAnnotation="工单编号数组" key="workOrderIds">
+			<parameter ref="workOrderId"></parameter>
+		</array>
+		<array chineseAnnotation="协助处理数组" key="synergiaDisposeRecords">
+			<parameter ref="synergiaDisposerId"></parameter>
+			<parameter ref="synergiaDisposerName"></parameter>
+			<parameter ref="disposeDescribe"></parameter>
+		</array>
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return key="addSize" chineseAnnotation="添加成功数量" type="INTEGER" maxLength="32" example="2"></parameter-return>
+	</method>
+
+
+
+	<method chineseAnnotation="获取工单的协助处理信息" url="operation-platform-system-managerment/synergiaDisposeRecordController/getSynergiaDisposeRecords" method="POST">
+		<parameter ref="workOrderId"></parameter>
+
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+	</method>
+
+
+	<method chineseAnnotation="获取工单对应的邮件html全文" url="operation-platform-monitoring-service/alarmController/getEmailHtml" method="POST">
+		<parameter key="alarmId" chineseAnnotation="警报编号" type="STRING" maxLength="32" example="01A8CDC1112D4A8CB707DD93F94ECC8D"></parameter>
+
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return key="emailHtml" chineseAnnotation="邮件html全文" type="STRING" maxLength="10000000" example=""></parameter-return>
+	</method>
+
+	<method chineseAnnotation="获取工单处理数量" url="operation-platform-system-managerment/workOrderController/getWorkOrderCount" method="POST">
+
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return key="emailHtml" chineseAnnotation="邮件html全文" type="STRING" maxLength="10000000" example=""></parameter-return>
+	</method>
+
+
+	<method chineseAnnotation="根据工单编号数组批量查询工单" url="operation-platform-system-managerment/workOrderController/getWorkOrdersByIds" method="POST">
+		<array chineseAnnotation="工单编号数组" key="workOrderIds">
+			<parameter ref="workOrderId"></parameter>
+		</array>
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return key="emailHtml" chineseAnnotation="邮件html全文" type="STRING" maxLength="10000000" example=""></parameter-return>
+	</method>
+
+
+	<method chineseAnnotation="获取工单的操作历史" url="operation-platform-system-managerment/workOrderController/getWorkOrderOperateHistory" method="POST">
+
+		<parameter ref="workOrderId"></parameter>
+
+		<parameter-return ref="parameterVerificationCode"></parameter-return>
+		<parameter-return ref="parameterVerificationMessage"></parameter-return>
+		<parameter-return ref="responseData"></parameter-return>
+		<parameter-return ref="workOrderMainDisposerId"></parameter-return>
+		<parameter-return ref="workOrderMainDisposerName"></parameter-return>
+		<parameter-return key="operateContent" chineseAnnotation="操作内容" type="STRING" maxLength="64" example="更新"></parameter-return>
+	</method>
+
+</controller>
+
+<!-- -->
+
+
+ 

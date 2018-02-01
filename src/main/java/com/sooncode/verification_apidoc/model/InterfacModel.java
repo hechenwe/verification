@@ -27,11 +27,15 @@ public class InterfacModel {
 	private String moduleId;
 	
 	private String interfacNumber;
+	
+ 
 
 	private List<ParameterModel> parameterModels;
 	private List<ArrayModel> arrayModels;
 	private List<ObjectModel> objectModels;
 	private List<ParameterModel> parameterReturModels;
+	
+	
 
 	public String getInterfacId() {
 		return interfacId;
@@ -144,6 +148,8 @@ public class InterfacModel {
 	public void setInterfacNumber(String interfacNumber) {
 		this.interfacNumber = interfacNumber;
 	}
+
+	 
 
 	 
 
